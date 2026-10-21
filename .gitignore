@@ -1,0 +1,16 @@
+# Arquivo com as senhas e chaves secretas (NUNCA SUBIR)
+.env
+
+# Ambiente virtual
+venv/
+env/
+
+# Arquivos temporários do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos locais do sistema
+*.sqlite3
+desktop.ini
+.DS_Store
