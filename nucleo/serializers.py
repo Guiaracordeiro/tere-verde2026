@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Trilha, Avaliacao
+from .models import Trilha, Avaliacao, Administrador, Evento
 
 class AvaliacaoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,3 +23,14 @@ class TrilhaSerializer(serializers.ModelSerializer):
             'avaliacoes',
             'criado_em'
         ]
+class EventoSerializer(serializers.ModelSerializer):
+    class Meta:
+            model = Evento
+            fields = [
+            'id', 
+            'titulo', 
+            'data', 
+            'local', 
+            'descricao', 
+            'criado_em'
+            ]

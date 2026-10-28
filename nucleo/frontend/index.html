@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terê Verde Online - Início</title>
+    <link rel="stylesheet" href="CSS/style-adm.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f7faf7; color: #333; }
+        
+        /* SLIDER HERO */
+        .slider-container { position: relative; width: 100%; height: 440px; overflow: hidden; background: #1c2d27; }
+        .slide { display: none; width: 100%; height: 100%; position: relative; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); display: block; }
+        .slide-caption { position: absolute; bottom: 35px; left: 40px; background: rgba(0, 0, 0, 0.7); color: #fff; padding: 18px 25px; border-radius: 8px; max-width: 600px; border-left: 5px solid #2e7d32; }
+        .slide-caption h3 { margin: 0 0 6px 0; font-size: 24px; color: #bbf7d0; }
+        .slide-caption p { margin: 0; font-size: 14px; color: #f0fdf4; }
+        .slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; font-size: 22px; z-index: 10; transition: background 0.3s; }
+        .slide-btn:hover { background: #2e7d32; }
+        .slide-btn.prev { left: 20px; }
+        .slide-btn.next { right: 20px; }
+
+        /* PARQUES */
+        .secao-parques { max-width: 1100px; margin: 45px auto; padding: 0 20px; }
+        .titulo-secao { text-align: center; color: #1e3a2f; font-size: 32px; margin-bottom: 35px; font-weight: bold; }
+        .grid-parques { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 25px; }
+        .card-parque { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.07); display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
+        .card-parque:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+        .card-parque img { width: 100%; height: 220px; object-fit: cover; display: block; }
+        .card-conteudo { padding: 22px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-conteudo h3 { margin: 0 0 10px 0; color: #2e7d32; font-size: 20px; }
+        .card-conteudo p { color: #555; font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
+        .btn-saiba-mais { background: #2e7d32; color: #fff; text-decoration: none; padding: 11px 22px; border-radius: 6px; font-weight: bold; font-size: 14px; text-align: center; align-self: flex-start; transition: background 0.2s; display: inline-block; }
+        .btn-saiba-mais:hover { background: #225c25; }
+
+        /* ÚLTIMAS ATUALIZAÇÕES COM ONDA E FUNDO VERDE */
+        .secao-atualizacoes { background: linear-gradient(180deg, #dcfce7 0%, #bbf7d0 100%); padding: 50px 20px 60px 20px; margin-top: 50px; border-top-left-radius: 35px; border-top-right-radius: 35px; }
+        .container-atualizacoes { max-width: 900px; margin: 0 auto; }
+        .titulo-atualizacoes { color: #164e2e; font-size: 26px; margin-bottom: 25px; }
+        .item-atualizacao { padding: 14px 0; border-bottom: 1px dashed rgba(22, 78, 46, 0.3); font-size: 15px; color: #1b4332; line-height: 1.6; }
+        .item-atualizacao strong { color: #0f3d23; }
+        .item-atualizacao:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="conteudo">
+            <a href="index.html">
+                <img src="img/tere verde sem fundo.png" alt="Logo Terê Verde Online" class="logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html" style="font-weight: bold; color: #2e7d32;">Início</a></li>
+                    <li><a href="trilhas.html">Trilhas</a></li>
+                    <li><a href="cachoeiras.html">Cachoeiras</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="admin-eventos.html">Área Restrita</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. SLIDER COM AS FOTOGRAFIAS LOCAIS DA SUA PASTA IMG -->
+        <div class="slider-container">
+            <!-- Slide 1: PARNASO (Dedo de Deus) -->
+            <div class="slide" style="display: block;">
+                <img src="img/dedo-de-deus.jpg" alt="Parque Nacional da Serra dos Órgãos">
+                <div class="slide-caption">
+                    <h3>Parque Nacional da Serra dos Órgãos</h3>
+                    <p>O berço do montanhismo nacional e a silhueta do Dedo de Deus.</p>
+                </div>
+            </div>
+
+            <!-- Slide 2: Três Picos -->
+            <div class="slide">
+                <img src="img/tres-picos.jpg" alt="Parque Estadual dos Três Picos">
+                <div class="slide-caption">
+                    <h3>Parque Estadual dos Três Picos</h3>
+                    <p>O maior parque estadual do Rio de Janeiro, com muralhas rochosas imponentes.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Montanhas de Teresópolis (Pedra da Tartaruga) -->
+            <div class="slide">
+                <img src="img/pedra-da-tartaruga-por-do-sol.jpg" alt="Pedra da Tartaruga">
+                <div class="slide-caption">
+                    <h3>Parque Natural Montanhas de Teresópolis</h3>
+                    <p>Trilhas acessíveis, miradouros panorâmicos e o pôr do sol na Pedra da Tartaruga.</p>
+                </div>
+            </div>
+
+            <button class="slide-btn prev" onclick="mudarSlide(-1)">❮</button>
+            <button class="slide-btn next" onclick="mudarSlide(1)">❯</button>
+        </div>
+
+        <!-- 2. CARTÕES DOS PARQUES COM AS SUAS FOTOS LOCAIS E LINKS CORRETOS -->
+        <section class="secao-parques">
+            <h2 class="titulo-secao">Nossos Parques</h2>
+            <div class="grid-parques">
+                
+                <!-- Parque 1: PARNASO -> Abre parque.html -->
+                <div class="card-parque">
+                    <img src="img/dedo-de-deus.jpg" alt="Parque Nacional da Serra dos Órgãos">
+                    <div class="card-conteudo">
+                        <div>
+                            <h3>Parque Nacional da Serra dos Órgãos</h3>
+                            <p>O principal destino para montanhismo e trilhas na região.</p>
+                        </div>
+                        <a href="parque.html" class="btn-saiba-mais">Saiba Mais</a>
+                    </div>
+                </div>
+
+                <!-- Parque 2: Três Picos -> Abre petp.html -->
+                <div class="card-parque">
+                    <img src="img/tres-picos.jpg" alt="Parque Estadual dos Três Picos">
+                    <div class="card-conteudo">
+                        <div>
+                            <h3>Parque Estadual dos Três Picos</h3>
+                            <p>O maior parque estadual do Rio de Janeiro, rico em fauna e flora.</p>
+                        </div>
+                        <a href="petp.html" class="btn-saiba-mais">Saiba Mais</a>
+                    </div>
+                </div>
+
+                <!-- Parque 3: PNMMT -> Abre pnmt.html -->
+                <div class="card-parque">
+                    <img src="img/pedra-da-tartaruga-por-do-sol.jpg" alt="Parque Natural Montanhas de Teresópolis">
+                    <div class="card-conteudo">
+                        <div>
+                            <h3>Parque Natural Montanhas de Teresópolis</h3>
+                            <p>Unidade de conservação municipal com trilhas e vistas incríveis.</p>
+                        </div>
+                        <a href="pnmt.html" class="btn-saiba-mais">Saiba Mais</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. ÚLTIMAS ATUALIZAÇÕES DINÂMICAS (MONGODB) -->
+        <section class="secao-atualizacoes">
+            <div class="container-atualizacoes">
+                <h2 class="titulo-atualizacoes">Últimas Atualizações</h2>
+                <div id="lista-atualizacoes">
+                    <div class="item-atualizacao">
+                        <strong>27/10/2026:</strong> Trilha da Pedra do Sino e abrigos com funcionamento regularizado.
+                    </div>
+                    <div class="item-atualizacao">
+                        <strong>25/10/2026:</strong> Temporada de montanha em curso com trilhas monitorizadas.
+                    </div>
+                    <div class="item-atualizacao">
+                        <strong>20/10/2026:</strong> Acesso à Pedra da Tartaruga liberado para visitação e acampamento.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="conteudo"><br><br>
+            <p>© 2025 Terê Verde Online. Todos os direitos reservados. <br>
+            Email: contato.tereverde@email.com <br> Telefone: (21) 99999-9999</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS INTEGRADOS -->
+    <script>
+        // CONTROLO DO SLIDER
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function mostrarSlide(idx) {
+            if (slides.length === 0) return;
+            if (idx >= slides.length) slideIndex = 0;
+            else if (idx < 0) slideIndex = slides.length - 1;
+            else slideIndex = idx;
+
+            slides.forEach((sl, i) => {
+                sl.style.display = (i === slideIndex) ? 'block' : 'none';
+            });
+        }
+
+        function mudarSlide(passo) {
+            mostrarSlide(slideIndex + passo);
+        }
+
+        setInterval(() => mudarSlide(1), 5000);
+
+        // ATUALIZAÇÕES DA API DJANGO / MONGODB
+        async function carregarAtualizacoesAPI() {
+            const container = document.getElementById('lista-atualizacoes');
+            if (!container) return;
+
+            try {
+                const resposta = await fetch('http://127.0.0.1:8000/api/eventos/');
+                const eventos = await resposta.json();
+
+                if (eventos && eventos.length > 0) {
+                    const ultimos = eventos.slice(0, 3);
+                    container.innerHTML = ultimos.map(ev => `
+                        <div class="item-atualizacao">
+                            <strong>${ev.data}:</strong> ${ev.titulo} — <em>${ev.local}</em>. ${ev.descricao ? ev.descricao.substring(0, 90) + '...' : ''}
+                        </div>
+                    `).join('');
+                }
+            } catch (erro) {
+                console.log('API desconectada; dados padrão mantidos.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            mostrarSlide(0);
+            carregarAtualizacoesAPI();
+        });
+    </script>
+</body>
+</html>

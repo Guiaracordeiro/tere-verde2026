@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terê Verde Online - PARNASO</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <header>
+        <div class="conteudo">
+             <a href="index.html">
+    <img src="img/dedo-de-deus.jpg" alt="Logo Terê Verde Online" class="logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="trilhas.html">Trilhas</a></li>
+                    <li><a href="cachoeiras.html">Cachoeiras</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="admin-login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="titulo-pagina" >
+            <div class="conteudo">
+                <h2>Parque Nacional da Serra dos Órgãos</h2>
+            </div>
+        </section>
+
+        <section class="parque-detalhe">
+            <div class="conteudo">
+                <img src="img/dedo-de-deus.jpg" alt="Dedo de Deus" class="parque-imagem">
+                
+                <div class="tabs">
+                    <button class="tab-link active" onclick="openTab(event, 'Sobre')">Sobre</button>
+                    <button class="tab-link" onclick="openTab(event, 'Info')">Informações e Condições</button>
+                    <button class="tab-link" onclick="openTab(event, 'Trilhas')">Principais Trilhas</button>
+                </div>
+
+                <div id="Sobre" class="tab-content" style="display: block;">
+                    <h3>Sobre o Parque</h3>
+                    <br>
+                    <p>O Parque Nacional da Serra dos Órgãos protege a excepcional paisagem e a biodiversidade deste trecho da Serra do Mar na Região Serrana do Rio de Janeiro. São 19.855 hectares protegidos nos municípios de Teresópolis, Petrópolis, Magé e Guapimirim.
+                    <br><br>
+                    Criado em 30 de novembro de 1939, o PARNASO é o terceiro parque mais antigo do país, representando um importante marco na história das Unidades de Conservação brasileiras. (Conheça um pouco mais da história do parque)
+                    <br><br>
+                    É um dos melhores locais do país para a prática de esportes de montanha, como escalada, caminhada, rapel e outros; além de ter fantásticas cachoeiras. O Parque tem a maior rede de trilhas do Brasil. São mais de 200 quilômetros de trilhas em todos os níveis de dificuldade: desde a trilha suspensa, acessível até a cadeirantes, até a pesada Travessia Petrópolis-Teresópolis, com 30 Km de subidas e descidas pela parte alta das montanhas.
+                    <br><br>
+                    Entre as escaladas destacam-se o Dedo de Deus, considerado o marco inicial da escalada no país, a Agulha do Diabo e centenas de vias de todos os níveis de dificuldade, desde iniciantes até alguns dos maiores bigwalls do país.
+                    <br><br>
+                    O Parque abriga mais de 2.800 espécies de plantas catalogadas pela ciência, 462 espécies de aves, 100 de mamíferos, 103 de anfíbios e 83 de répteis, incluindo 130 animais ameaçados de extinção e muitas espécies endêmicas (que só ocorrem neste local).
+                    <br><br>
+                    Assim como todas as unidades de conservação federais, o PARNASO é administrado pelo Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio), autarquia federal responsável também pela conservação de espécies ameaçadas.</p>
+                    <br>
+                    <h4>Biodiversidade</h4>
+                    <p>A fauna é rica, com espécies como o mico-leão-dourado... A flora inclui orquídeas raras...</p>
+                </div>
+
+                <div id="Info" class="tab-content">
+                    <h3>Informações e Condições</h3><br>
+                    <p><strong>Horário de Funcionamento:</strong> O Parque funciona de terça a domingo e feriados nacionais e estaduais do Rio de Janeiro (Sede Teresópolis) 
+                    <br><br>
+                    🪪 Obrigatória a identificação individual na entrada (CPF + documento com foto: RG, CNH ou passaporte).
+                    </p><br>
+                    <p><strong>Ingressos:</strong> O acesso ao Parque Nacional da Serra dos Órgãos está temporariamente gratuito em todas as suas áreas, incluindo: <br>
+                        ✅ Entrada <br>
+                        ✅ Estacionamento <br>
+                        ✅ Campings <br>
+                        ✅ Trilhas <br>
+                        ✅ Cachoeiras</p>
+                    <p><strong>Condições Atuais:</strong></p>
+                    <ul class="condicoes">
+                        <li class="aberto">Trilha da Pedra do Sino: ABERTA</li>
+                        <li class="fechado">Poço dois Irmãos: FECHADA (Alerta de Tempestade) </li>
+                        <li class="atencao">Piscina Natural: ABERTA (Água muito fria)</li>
+                    </ul>
+                </div>
+
+                <div id="Trilhas" class="tab-content">
+                    <h3>Principais Trilhas no PARNASO</h3>
+                    <ul>
+                        <li>Trilha da Pedra do Sino (Difícil)</li>
+                        <li>Trilha do Cartão Postal (Fácil)</li>
+                        <li>Travessia Petrópolis-Teresópolis (Muito Difícil)</li>
+                        <li>Trilha da Cachoeira Véu da Noiva (Média)</li>
+                    </ul>
+                </div>
+            <div class="conteudo-botao-voltar">
+                <a href="index.html" class="botao-voltar">← Voltar</a>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="conteudo">
+            <p>© 2025 Terê Verde Online. 
+                Todos os direitos reservados. <br>
+                Email: contato.tereverde@email.com <br> Telefone: (21) 99999-9999</p>
+        </div>
+    </footer>
+        <script src="JS/scripts.js"></script>
+</body>
+</html>

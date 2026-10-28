@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terê Verde Online - Login Administrador</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <header>
+        <div class="conteudo">
+            <a href="index.html">
+                <img src="img/tere verde sem fundo.png" alt="Logo Terê Verde Online" class="logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="trilhas.html">Trilhas</a></li>
+                    <li><a href="cachoeiras.html">Cachoeiras</a></li>
+                    <li><a href="eventos.html">Eventos</a> </li>
+                    <li><a href="admin-login.html"class="active">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="titulo-pagina">
+            <div class="conteudo">
+                <h2>Login do Administrador</h2>
+            </div>
+        </section>
+
+        <section class="login-form-section-adm">
+            <div class="conteudo">
+                <div class="login-caixa caixa">
+                    <h3>Acesso Restrito</h3>
+                    <form action="#" method="post"> <div class="form-grupo">
+                            <label for="username">Usuário:</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="password">Senha:</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="botao">Entrar</button>
+                        <p id="errorMessage" style="color: red; margin-top: 10px; display: none;">Usuário ou senha incorretos.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="conteudo"><br><br>
+            <p>© 2025 Terê Verde Online. 
+                Todos os direitos reservados. <br>
+                Email: contato.tereverde@email.com <br> Telefone: (21) 99999-8888</p>
+        </div>
+    </footer>
+<script>
+  const form = document.querySelector('form');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Seleciona todos os inputs do formulário pela ordem visual
+      const inputs = form.querySelectorAll('input');
+      const campoUsuario = inputs[0]; // 1º campo: Usuário / Email
+      const campoSenha = inputs[1];   // 2º campo: Senha
+
+      if (!campoUsuario || !campoSenha) {
+        alert('Erro: Não foi possível localizar os campos de entrada no formulário.');
+        return;
+      }
+
+      const email = campoUsuario.value.trim();
+      const senha = campoSenha.value.trim();
+
+      console.log('A tentar login com:', email);
+
+      try {
+        const resposta = await fetch('http://127.0.0.1:8000/api/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: email, senha: senha })
+        });
+
+        const dados = await resposta.json();
+        console.log('Resposta do servidor:', dados);
+
+        if (resposta.ok) {
+          // Guarda o token no armazenamento do navegador
+          localStorage.setItem('adminToken', dados.token);
+          alert('Login efetuado com sucesso! Bem-vindo, ' + dados.admin);
+          window.location.href = 'admin-eventos.html';
+        } else {
+          alert(dados.erro || 'Credenciais inválidas.');
+        }
+      } catch (erro) {
+        console.error('Falha de ligação:', erro);
+        alert('Não foi possível conectar ao servidor. Verifica se o backend (runserver) está ativo.');
+      }
+    });
+  }
+</script>
+    </body>
+
+</html>

@@ -1,0 +1,402 @@
+/* Reset Básico e Fontes */
+body, h1, h2, h3, h4, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    color: #333;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-image: url('../img/fundo slide linhas medias.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.conteudo {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.conteudo-botao-voltar {
+    display: flex;
+    justify-content: flex-end; /* Alinha o item no final (direita) */
+    width: 100%;
+}
+
+/* Cabeçalho */
+header {
+    background: transparent;
+    padding: 5px 0;
+    border-bottom: 2px solid #0a4a1b;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    grid-row: 1;
+}
+
+header .conteudo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    height: 150px;
+    color: #0a4a1b;
+}
+
+header nav ul {
+    display: flex;
+    gap: 20px;
+}
+
+header nav a {
+    font-weight: 500;
+    font-size: 16px;
+    color: #555;
+    padding-bottom: 5px;
+}
+
+header nav a.active,
+header nav a:hover {
+    color: #1a9c3d;
+    border-bottom: 2px solid #1a9c3d;
+}
+
+/* Home */
+.banner-principal {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/teresopolis BR menor.png') no-repeat center center/cover;
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+    min-height: 100px;
+}
+.banner-principal h2 {
+    color: #fff;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.banner-principal p {
+    color: #eee;
+    font-size: 20px;
+}
+
+/* Seção de Parques (Home) */
+.parques {
+    padding: 50px 0;
+    margin-top: 40px;
+}
+.parques h3 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+.caixa-conteudo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+.caixa {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.caixa img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.caixa h4 {
+    font-size: 20px;
+    padding: 15px 20px 10px 20px;
+}
+.caixa p {
+    padding: 0 20px 15px 20px;
+    font-size: 15px;
+    color: #666;
+}
+.botao {
+    display: inline-block;
+    background: #1a9c3d;
+    color: #fff;
+    padding: 10px 15px;
+    margin: 0 20px 20px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    margin-top: auto;
+    align-self: flex-start;
+}
+.botao:hover {
+    background: #0a4a1b;
+}
+
+/* Atualizações (Home) */
+.atualizacoes {
+    background: whitesmoke;
+    padding: 20px 0;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+.atualizacoes h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+.atualizacoes li {
+    padding: 10px 0;
+    border-bottom: 1px dashed #ccc;
+    margin-top: 5px;
+}
+
+/* Título da Página*/
+.titulo-pagina {
+    background:rgba(23, 107, 92, 0.6);
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    min-height: 100px;
+}
+.titulo-pagina h2 {
+    color: #fff;
+    font-size: 32px;
+}
+
+/* Filtros (Página Trilhas) */
+.filtros {
+    background: #f4f4f4;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+.filtros label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+.filtros select {
+    padding: 8px;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Lista de Trilhas (Página Trilhas) */
+.trilhas-lista {
+    padding: 40px 0;
+    margin-top: -20px;
+}
+.trilha-caixa {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.trilha-caixa h4 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.trilha-caixa .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    margin-right: 10px;
+}
+.tag.parque-parnaso { background: #0a4a1b; }
+.tag.parque-petp { background: #0056b3; }
+.tag.parque-pnmmt { background: #8c5a02; }
+.tag.dif-facil { background: #1a9c3d; }
+.tag.dif-media { background: #f0ad4e; }
+.tag.dif-dificil { background: #d9534f; }
+
+.trilha-caixa p {
+    margin-top: 10px;
+}
+
+/* Página Parque (Detalhe) */
+.parque-detalhe {
+    padding: 40px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-top: -20px;
+}
+.parque-imagem {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+/* Abas */
+.tabs {
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+.tab-link {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    font-weight: 500;
+}
+.tab-link:hover {
+    background-color: #f1f1f1;
+}
+.tab-link.active {
+    background-color: #fff;
+    border-bottom: 3px solid #1a9c3d;
+    color: #1a9c3d;
+}
+.tab-content {
+    display: none;
+    padding: 10px 0;
+}
+.tab-content ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+.condicoes li {
+    padding: 5px;
+    font-weight: bold;
+}
+.condicoes .aberto { color: #1a9c3d; }
+.condicoes .fechado { color: #d9534f; }
+.condicoes .atencao { color: #f0ad4e; }
+
+
+/* Rodapé */
+footer {
+    color: #333;
+    padding: 5px 0;
+    text-align: center;
+}
+footer p {
+    color: #fff;
+    margin-bottom: 0px;
+}
+footer .admin-login {
+    color: #fff;
+    font-size: 14px;
+    text-decoration: underline;
+}
+footer .admin-login:hover {
+    color: #1a9c3d;
+}
+
+/* Formulário de Login Administrador */
+
+.login-form-section-adm .conteudo,
+.admin-panel .conteudo {
+    max-width: 450px;
+    margin: 10px auto;
+}
+
+.login-caixa,
+.admin-caixa {
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.login-caixa h3,
+.admin-caixa h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.form-grupo {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-grupo label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-grupo input[type="text"],
+.form-grupo input[type="password"],
+.form-grupo input[type="date"],
+.form-grupo select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-grupo input[type="date"] {
+    appearance: none;
+}
+
+.login-caixa .botao,
+.admin-caixa .botao {
+    display: inline-block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px;
+    font-size: 18px;
+    margin-top: 15px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+.login-container-adm {
+    padding: 40px 0;
+    margin-top: -20px;
+}
+
+/* Botão de Voltar */
+.botao-voltar {
+    display: inline-block;
+    margin-top: 30px;
+    color: #555;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.botao-voltar:hover {
+    color: #0a4a1b;
+}
+ 
+.eventos-lista {
+            padding: 60px 0;
+}
+.evento-caixa-aviso {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 0 auto; /* Centraliza a caixa */
+            max-width: 600px; /* Define uma largura máxima */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: center;
+}
+.evento-caixa-aviso h4 {
+            font-size: 20px;
+            color: #555;
+            font-weight: 500;
+}

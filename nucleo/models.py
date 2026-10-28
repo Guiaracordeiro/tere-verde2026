@@ -1,6 +1,5 @@
 from django.db import models
-
-
+from django_mongodb_backend.fields import ObjectIdAutoField
 from django.db import models
 
 class Trilha(models.Model):
@@ -32,3 +31,29 @@ class Avaliacao(models.Model):
 
     def __str__(self):
         return f"{self.autor} - {self.trilha.nome} ({self.nota}/5)"
+    
+class Administrador(models.Model):
+    id = ObjectIdAutoField(primary_key=True)
+    nome = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    senha = models.CharField(max_length=255)  # Senha com hash criptográfico
+    token = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.nome
+class Evento(models.Model):
+    id = models.CharField(primary_key=True, max_length=24, default='', editable=False)
+    titulo = models.CharField(max_length=150)
+    data = models.CharField(max_length=50) # Ex: "15 de Novembro de 2026"
+    local = models.CharField(max_length=150)
+    descricao = models.TextField(blank=True, null=True)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            from bson import ObjectId
+            self.id = str(ObjectId())
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.titulo

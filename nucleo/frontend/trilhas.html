@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terê Verde Online - Trilhas</title>
+    <link rel="stylesheet" href="CSS/style-adm.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f6f8f6; color: #333; }
+        
+        /* BANNER TOPO */
+        .banner-secao { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); color: #fff; padding: 45px 20px; text-align: center; }
+        .banner-secao h2 { margin: 0 0 10px 0; font-size: 32px; font-weight: bold; }
+        .banner-secao p { margin: 0; font-size: 16px; opacity: 0.9; }
+
+        .conteudo-principal { max-width: 1150px; margin: 30px auto 70px auto; padding: 0 20px; }
+
+        /* BARRA DE FILTROS MODERNA */
+        .filtro-container { background: #fff; padding: 20px 25px; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; margin-bottom: 35px; border-left: 5px solid #2e7d32; }
+        .grupo-filtros { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+        .campo-filtro { display: flex; flex-direction: column; gap: 6px; }
+        .campo-filtro label { font-size: 13px; font-weight: bold; color: #444; text-transform: uppercase; letter-spacing: 0.5px; }
+        .campo-filtro select { padding: 9px 14px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; background: #fafafa; outline: none; cursor: pointer; min-width: 180px; }
+        .campo-filtro select:focus { border-color: #2e7d32; background: #fff; }
+        .contador-trilhas { font-size: 14px; color: #666; font-weight: 600; }
+
+        /* GRADE DE CARDS */
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; }
+        .card-item { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.06); display: flex; flex-direction: column; transition: transform 0.25s ease, box-shadow 0.25s ease; border: 1px solid #e9ecef; }
+        .card-item:hover { transform: translateY(-5px); box-shadow: 0 10px 22px rgba(0,0,0,0.12); }
+        
+        .card-img-box { position: relative; width: 100%; height: 210px; overflow: hidden; background: #1c2d27; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
+        .card-item:hover .card-img-box img { transform: scale(1.05); }
+        
+        /* STATUS BADGE */
+        .status-badge { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); color: #fff; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 6px #4ade80; }
+
+        .card-corpo { padding: 22px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .tags-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+        
+        /* ETIQUETAS */
+        .badge-parque { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #fff; }
+        .badge-parnaso { background: #1b5e20; }
+        .badge-petp { background: #0d47a1; }
+        .badge-pnmmt { background: #e65100; }
+
+        .badge-dif { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .dif-facil { background: #e8f5e9; color: #2e7d32; }
+        .dif-moderada { background: #fff3e0; color: #ef6c00; }
+        .dif-dificil { background: #ffebee; color: #c62828; }
+
+        .card-titulo { font-size: 20px; font-weight: bold; color: #1e3a2f; margin: 0 0 10px 0; }
+        .card-dados { display: flex; gap: 15px; margin: 8px 0 14px 0; font-size: 13px; color: #555; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .card-dados span { display: flex; align-items: center; gap: 5px; }
+        .card-desc { font-size: 14px; color: #666; line-height: 1.5; margin: 0 0 18px 0; flex: 1; }
+        
+        .btn-card { display: block; text-align: center; background: #f0fdf4; color: #2e7d32; border: 1px solid #bbf7d0; padding: 10px 16px; border-radius: 6px; font-weight: bold; font-size: 13px; text-decoration: none; transition: all 0.2s; }
+        .btn-card:hover { background: #2e7d32; color: #fff; border-color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="conteudo">
+            <a href="index.html">
+                <img src="img/tere verde sem fundo.png" alt="Logo Terê Verde Online" class="logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="trilhas.html" style="font-weight:bold; color:#2e7d32;">Trilhas</a></li>
+                    <li><a href="cachoeiras.html">Cachoeiras</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="admin-eventos.html">Área Restrita</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="banner-secao">
+        <h2>Explore Nossas Trilhas</h2>
+        <p>Descubra os principais roteiros de montanhismo e caminhada ecológica em Teresópolis</p>
+    </div>
+
+    <main class="conteudo-principal">
+        <!-- BARRA DE FILTROS DINÂMICA -->
+        <div class="filtro-container">
+            <div class="grupo-filtros">
+                <div class="campo-filtro">
+                    <label for="filtro-parque">Filtrar por Parque</label>
+                    <select id="filtro-parque" onchange="aplicarFiltros()">
+                        <option value="todos">Todos os Parques</option>
+                        <option value="PARNASO">PARNASO</option>
+                        <option value="PETP">Três Picos (PETP)</option>
+                        <option value="PNMMT">Montanhas de Teresópolis (PNMMT)</option>
+                    </select>
+                </div>
+                <div class="campo-filtro">
+                    <label for="filtro-dificuldade">Dificuldade</label>
+                    <select id="filtro-dificuldade" onchange="aplicarFiltros()">
+                        <option value="todas">Todas as Dificuldades</option>
+                        <option value="Fácil">Fácil</option>
+                        <option value="Moderada">Moderada</option>
+                        <option value="Difícil">Difícil</option>
+                    </select>
+                </div>
+            </div>
+            <div class="contador-trilhas" id="contador-trilhas">Mostrando 4 trilhas</div>
+        </div>
+
+        <!-- GRADE DE CARDS DE TRILHAS -->
+        <div class="grid-cards" id="grid-trilhas">
+            
+            <!-- Trilha 1: Pedra do Sino -->
+            <div class="card-item" data-parque="PARNASO" data-dificuldade="Difícil">
+                <div class="card-img-box">
+                    <img src="img/amanhecer_no_hercules_.jpg" alt="Trilha da Pedra do Sino" onerror="this.src='img/dedo-de-deus.jpg'">
+                    <div class="status-badge"><span class="status-dot"></span> Aberta</div>
+                </div>
+                <div class="card-corpo">
+                    <div>
+                        <div class="tags-row">
+                            <span class="badge-parque badge-parnaso">PARNASO</span>
+                            <span class="badge-dif dif-dificil">Difícil</span>
+                        </div>
+                        <h3 class="card-titulo">Trilha da Pedra do Sino</h3>
+                        <div class="card-dados">
+                            <span>📏 11 km (ida)</span>
+                            <span>⏱️ ~5h a 6h</span>
+                            <span>⛰️ 2.275m</span>
+                        </div>
+                        <p class="card-desc">A trilha mais emblemática do parque, levando ao ponto culminante da Serra dos Órgãos com vista panorâmica para a Baía de Guanabara.</p>
+                    </div>
+                    <a href="parque.html" class="btn-card">Ver Detalhes do Parque</a>
+                </div>
+            </div>
+
+            <!-- Trilha 2: Pedra da Tartaruga -->
+            <div class="card-item" data-parque="PNMMT" data-dificuldade="Fácil">
+                <div class="card-img-box">
+                    <img src="img/pedra-da-tartaruga-por-do-sol.jpg" alt="Pedra da Tartaruga">
+                    <div class="status-badge"><span class="status-dot"></span> Aberta</div>
+                </div>
+                <div class="card-corpo">
+                    <div>
+                        <div class="tags-row">
+                            <span class="badge-parque badge-pnmmt">PNMMT</span>
+                            <span class="badge-dif dif-facil">Fácil</span>
+                        </div>
+                        <h3 class="card-titulo">Trilha da Pedra da Tartaruga</h3>
+                        <div class="card-dados">
+                            <span>📏 1.2 km (circuito)</span>
+                            <span>⏱️ ~45 min</span>
+                            <span>⛰️ 1.180m</span>
+                        </div>
+                        <p class="card-desc">Trilha leve com área de camping, famosa pela formação rochosa única e pelo pôr do sol espetacular sobre as montanhas de Teresópolis.</p>
+                    </div>
+                    <a href="pnmt.html" class="btn-card">Ver Detalhes do Parque</a>
+                </div>
+            </div>
+
+            <!-- Trilha 3: Três Picos -->
+            <div class="card-item" data-parque="PETP" data-dificuldade="Difícil">
+                <div class="card-img-box">
+                    <img src="img/tres-picos.jpg" alt="Trilha dos Três Picos">
+                    <div class="status-badge"><span class="status-dot"></span> Aberta</div>
+                </div>
+                <div class="card-corpo">
+                    <div>
+                        <div class="tags-row">
+                            <span class="badge-parque badge-petp">PETP</span>
+                            <span class="badge-dif dif-dificil">Difícil</span>
+                        </div>
+                        <h3 class="card-titulo">Trilha dos Três Picos</h3>
+                        <div class="card-dados">
+                            <span>📏 7 km (ida)</span>
+                            <span>⏱️ ~4h30</span>
+                            <span>⛰️ 2.316m</span>
+                        </div>
+                        <p class="card-desc">Caminhada técnica cercada por paredões colossais de granito no maior parque estadual do RJ, ideal para montanhistas experientes.</p>
+                    </div>
+                    <a href="petp.html" class="btn-card">Ver Detalhes do Parque</a>
+                </div>
+            </div>
+
+            <!-- Trilha 4: Trilha Suspensa -->
+            <div class="card-item" data-parque="PARNASO" data-dificuldade="Fácil">
+                <div class="card-img-box">
+                    <img src="img/dedo-de-deus.jpg" alt="Trilha Suspensa">
+                    <div class="status-badge"><span class="status-dot"></span> Aberta</div>
+                </div>
+                <div class="card-corpo">
+                    <div>
+                        <div class="tags-row">
+                            <span class="badge-parque badge-parnaso">PARNASO</span>
+                            <span class="badge-dif dif-facil">Fácil</span>
+                        </div>
+                        <h3 class="card-titulo">Trilha Suspensa</h3>
+                        <div class="card-dados">
+                            <span>📏 1.3 km</span>
+                            <span>⏱️ ~30 min</span>
+                            <span>♿ Acessível</span>
+                        </div>
+                        <p class="card-desc">Passarela de madeira suspensa no nível das copas das árvores da Mata Atlântica. Perfeita para famílias, crianças e observação de aves.</p>
+                    </div>
+                    <a href="parque.html" class="btn-card">Ver Detalhes do Parque</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="conteudo"><br><br>
+            <p>© 2025 Terê Verde Online. Todos os direitos reservados. <br>
+            Email: contato.tereverde@email.com <br> Telefone: (21) 99999-9999</p>
+        </div>
+    </footer>
+
+    <!-- FILTRO EM TEMPO REAL -->
+    <script>
+        function aplicarFiltros() {
+            const parqueSelecionado = document.getElementById('filtro-parque').value;
+            const dificuldadeSelecionada = document.getElementById('filtro-dificuldade').value;
+            const cards = document.querySelectorAll('#grid-trilhas .card-item');
+            let visiveis = 0;
+
+            cards.forEach(card => {
+                const parqueCard = card.getAttribute('data-parque');
+                const difCard = card.getAttribute('data-dificuldade');
+
+                const bateuParque = (parqueSelecionado === 'todos' || parqueCard === parqueSelecionado);
+                const bateuDificuldade = (dificuldadeSelecionada === 'todas' || difCard === dificuldadeSelecionada);
+
+                if (bateuParque && bateuDificuldade) {
+                    card.style.display = 'flex';
+                    visiveis++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const contador = document.getElementById('contador-trilhas');
+            contador.innerText = `Mostrando ${visiveis} ${visiveis === 1 ? 'trilha' : 'trilhas'}`;
+        }
+    </script>
+</body>
+</html>

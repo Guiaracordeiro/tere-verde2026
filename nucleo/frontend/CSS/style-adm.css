@@ -1,0 +1,249 @@
+/* Reset Básico e Fontes */
+body, h1, h2, h3, h4, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    color: #333;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-image: url('../img/fundo slide linhas medias.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.conteudo {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Cabeçalho*/
+header {
+    background: transparent;
+    padding: 5px 0;
+    border-bottom: 2px solid #0a4a1b;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header .conteudo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    height: 150px;
+    color: #0a4a1b;
+}
+
+header nav ul {
+    display: flex;
+    gap: 20px;
+}
+
+header nav a {
+    font-weight: 500;
+    font-size: 16px;
+    color: #555;
+    padding-bottom: 5px;
+}
+
+header nav a.active,
+header nav a:hover {
+    color: #1a9c3d;
+    border-bottom: 2px solid #1a9c3d;
+}
+
+/* Rodapé*/
+footer {
+    color: #333;
+    padding: 100px 0;
+    text-align: center;
+}
+footer p {
+    color: #fff;
+    margin-bottom: -100px;
+}
+footer .admin-login {
+    color: #fff;
+    font-size: 14px;
+    text-decoration: underline;
+}
+footer .admin-login:hover {
+    color: #1a9c3d;
+}
+
+/* Título da Página*/
+.titulo-pagina {
+    background: rgba(23, 107, 92, 0.6);
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+}
+.titulo-pagina h2 {
+    color: #fff;
+    font-size: 32px;
+}
+
+/* --- Estilos do Painel de Controle (Dashboard) --- */
+
+.admin-painel {
+    padding: 40px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.admin-painel .conteudo {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.admin-painel h3 {
+    text-align: center;
+    font-size: 26px;
+    color: #0a4a1b;
+    margin-bottom: 10px;
+}
+
+.admin-painel-subtitulo {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+/* Grade de Opções */
+.admin-opcoes-grade {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+/* caixa de Opção Individual */
+.admin-opcoes-caixa {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 25px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-opcoes-caixa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    color: #1a9c3d;
+}
+
+.admin-opcoes-caixa h4 {
+    font-size: 22px;
+    color: #0a4a1b;
+    margin-bottom: 10px;
+}
+
+.admin-opcoes-caixa p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+.admin-painel-adm {
+    padding: 40px 0;
+}
+/* --- Estilos dos Formulários Admin --- */
+
+.admin-form-cadastro {
+    padding: 40px 0;
+    background-color: rgba(255, 255, 255, 0.9); 
+}
+
+.admin-form-cadastro .conteudo {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.admin-form-caixa {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.admin-form-caixa h3 {
+    text-align: center;
+    color: #0a4a1b;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.form-grupo {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-grupo label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-grupo input[type="text"],
+.form-grupo input[type="password"],
+.form-grupo input[type="date"],
+.form-grupo select,
+.form-grupo textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.form-grupo textarea {
+    resize: vertical;
+}
+
+/* Botão de Envio */
+.admin-form-caixa .botao {
+    display: block;
+    width: fit-content;
+    padding: 12px;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    cursor: pointer;
+    background: #1a9c3d;
+    color: #fff;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    font-weight: bold;
+}
+
+.admin-form-caixa .botao:hover {
+    background: #0a4a1b;
+}
+
+/* Botão de Voltar */
+.botao-voltar {
+    display: inline-block;
+    margin-top: 30px;
+    color: #555;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.botao-voltar:hover {
+    color: #0a4a1b;
+}
