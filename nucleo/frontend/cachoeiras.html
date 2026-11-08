@@ -3,55 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terê Verde Online - Cachoeiras</title>
-    <link rel="stylesheet" href="CSS/style-adm.css">
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f6f8f6; color: #333; }
-        
-        /* BANNER TOPO AZUL-ESVERDEADO */
-        .banner-secao { background: linear-gradient(135deg, #1f6b52 0%, #114b39 100%); color: #fff; padding: 45px 20px; text-align: center; }
-        .banner-secao h2 { margin: 0 0 10px 0; font-size: 32px; font-weight: bold; }
-        .banner-secao p { margin: 0; font-size: 16px; opacity: 0.9; }
-
-        .conteudo-principal { max-width: 1150px; margin: 30px auto 70px auto; padding: 0 20px; }
-
-        /* BARRA DE FILTROS */
-        .filtro-container { background: #fff; padding: 20px 25px; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; margin-bottom: 35px; border-left: 5px solid #1f6b52; }
-        .campo-filtro { display: flex; flex-direction: column; gap: 6px; }
-        .campo-filtro label { font-size: 13px; font-weight: bold; color: #444; text-transform: uppercase; letter-spacing: 0.5px; }
-        .campo-filtro select { padding: 9px 14px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; background: #fafafa; outline: none; cursor: pointer; min-width: 200px; }
-        .campo-filtro select:focus { border-color: #1f6b52; background: #fff; }
-        .contador-itens { font-size: 14px; color: #666; font-weight: 600; }
-
-        /* GRADE DE CARDS */
-        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; }
-        .card-item { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.06); display: flex; flex-direction: column; transition: transform 0.25s ease, box-shadow 0.25s ease; border: 1px solid #e9ecef; }
-        .card-item:hover { transform: translateY(-5px); box-shadow: 0 10px 22px rgba(0,0,0,0.12); }
-        
-        .card-img-box { position: relative; width: 100%; height: 210px; overflow: hidden; background: #133329; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-        .card-item:hover .card-img-box img { transform: scale(1.05); }
-
-        .status-badge { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); color: #fff; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 6px #38bdf8; }
-
-        .card-corpo { padding: 22px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .tags-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-        
-        .badge-parque { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #fff; }
-        .badge-parnaso { background: #1b5e20; }
-        .badge-petp { background: #0d47a1; }
-        .badge-pnmmt { background: #e65100; }
-
-        .badge-tipo { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; background: #e0f2fe; color: #0369a1; }
-
-        .card-titulo { font-size: 20px; font-weight: bold; color: #1e3a2f; margin: 0 0 10px 0; }
-        .card-dados { display: flex; gap: 15px; margin: 8px 0 14px 0; font-size: 13px; color: #555; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
-        .card-desc { font-size: 14px; color: #666; line-height: 1.5; margin: 0 0 18px 0; }
-        
-        .btn-card { display: block; text-align: center; background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4; padding: 10px 16px; border-radius: 6px; font-weight: bold; font-size: 13px; text-decoration: none; transition: all 0.2s; }
-        .btn-card:hover { background: #0f766e; color: #fff; border-color: #0f766e; }
-    </style>
+    <title>Cachoeiras - Terê Verde Online</title>
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
     <header>
@@ -63,159 +16,64 @@
                 <ul>
                     <li><a href="index.html">Início</a></li>
                     <li><a href="trilhas.html">Trilhas</a></li>
-                    <li><a href="cachoeiras.html" style="font-weight:bold; color:#2e7d32;">Cachoeiras</a></li>
+                    <li><a href="cachoeiras.html" class="active">Cachoeiras</a></li>
                     <li><a href="eventos.html">Eventos</a></li>
-                    <li><a href="admin-eventos.html">Área Restrita</a></li>
+                    <li><a href="admin-login.html">Área Restrita</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <div class="banner-secao">
-        <h2>Explore Nossas Cachoeiras</h2>
-        <p>Refresque-se nas águas cristalinas e piscinas naturais da Serra Fluminense</p>
-    </div>
-
-    <main class="conteudo-principal">
-        <!-- BARRA DE FILTROS DINÂMICA -->
-        <div class="filtro-container">
-            <div class="campo-filtro">
-                <label for="filtro-parque-cachoeiras">Filtrar por Parque</label>
-                <select id="filtro-parque-cachoeiras" onchange="filtrarCachoeiras()">
-                    <option value="todos">Todos os Parques</option>
-                    <option value="PARNASO">PARNASO</option>
-                    <option value="PETP">Três Picos (PETP)</option>
-                    <option value="PNMMT">Montanhas de Teresópolis (PNMMT)</option>
-                </select>
+    <main>
+        <section class="titulo-pagina">
+            <div class="conteudo">
+                <h1>Cachoeiras e Poços Naturais</h1>
+                <p>Refresque-se nas águas cristalinas da Serra dos Órgãos.</p>
             </div>
-            <div class="contador-itens" id="contador-cachoeiras">Mostrando 4 cachoeiras</div>
-        </div>
+        </section>
 
-        <!-- GRADE DE CARDS DE CACHOEIRAS -->
-        <div class="grid-cards" id="grid-cachoeiras">
-            
-            <!-- Cachoeira 1: Véu da Noiva -->
-            <div class="card-item" data-parque="PARNASO">
-                <div class="card-img-box">
-                    <img src="img/dedo-de-deus.jpg" alt="Cachoeira do Véu da Noiva">
-                    <div class="status-badge"><span class="status-dot"></span> Própria p/ Banho</div>
-                </div>
-                <div class="card-corpo">
-                    <div>
-                        <div class="tags-row">
-                            <span class="badge-parque badge-parnaso">PARNASO</span>
-                            <span class="badge-tipo">Queda D'água</span>
-                        </div>
-                        <h3 class="card-titulo">Cachoeira do Véu da Noiva</h3>
-                        <div class="card-dados">
-                            <span>🚶 Trilha de nível médio</span>
-                            <span>💧 Queda de ~30m</span>
-                        </div>
-                        <p class="card-desc">Uma das mais famosas do Parque Nacional da Serra dos Órgãos, cercada por mata atlântica preservada e com ducha natural refrescante.</p>
-                    </div>
-                    <a href="parque.html" class="btn-card">Acessar Guia do Parque</a>
-                </div>
+        <section class="conteudo">
+            <div id="lista-cachoeiras" class="grade-cards">
+                <p style="text-align: center; width: 100%; color: #666;">Carregando cachoeiras...</p>
             </div>
-
-            <!-- Cachoeira 2: Frades -->
-            <div class="card-item" data-parque="PETP">
-                <div class="card-img-box">
-                    <img src="img/tres-picos.jpg" alt="Cachoeira dos Frades">
-                    <div class="status-badge"><span class="status-dot"></span> Piscina Natural</div>
-                </div>
-                <div class="card-corpo">
-                    <div>
-                        <div class="tags-row">
-                            <span class="badge-parque badge-petp">PETP</span>
-                            <span class="badge-tipo">Piscina Natural</span>
-                        </div>
-                        <h3 class="card-titulo">Cachoeira dos Frades</h3>
-                        <div class="card-dados">
-                            <span>🚗 Acesso fácil de carro</span>
-                            <span>💧 Poço profundo</span>
-                        </div>
-                        <p class="card-desc">Localizada no Parque Estadual, conhecida por suas águas cristalinas, ampla área para relaxar e uma queda d'água de cerca de 10 metros.</p>
-                    </div>
-                    <a href="petp.html" class="btn-card">Acessar Guia do Parque</a>
-                </div>
-            </div>
-
-            <!-- Cachoeira 3: Quebra-Frascos -->
-            <div class="card-item" data-parque="PNMMT">
-                <div class="card-img-box">
-                    <img src="img/pedra-da-tartaruga-por-do-sol.jpg" alt="Cachoeira do Quebra-Frascos">
-                    <div class="status-badge"><span class="status-dot"></span> Familiar</div>
-                </div>
-                <div class="card-corpo">
-                    <div>
-                        <div class="tags-row">
-                            <span class="badge-parque badge-pnmmt">PNMMT</span>
-                            <span class="badge-tipo">Banho Leve</span>
-                        </div>
-                        <h3 class="card-titulo">Cachoeira do Quebra-Frascos</h3>
-                        <div class="card-dados">
-                            <span>🚶 Caminhada curta</span>
-                            <span>💧 Poço calmo</span>
-                        </div>
-                        <p class="card-desc">Acessível no Parque Municipal, ótima para um mergulho refrescante com as crianças após uma caminhada leve e arborizada.</p>
-                    </div>
-                    <a href="pnmt.html" class="btn-card">Acessar Guia do Parque</a>
-                </div>
-            </div>
-
-            <!-- Cachoeira 4: Poço Dois Irmãos -->
-            <div class="card-item" data-parque="PARNASO">
-                <div class="card-img-box">
-                    <img src="img/amanhecer_no_hercules_.jpg" alt="Poço Dois Irmãos" onerror="this.src='img/dedo-de-deus.jpg'">
-                    <div class="status-badge"><span class="status-dot"></span> Própria p/ Banho</div>
-                </div>
-                <div class="card-corpo">
-                    <div>
-                        <div class="tags-row">
-                            <span class="badge-parque badge-parnaso">PARNASO</span>
-                            <span class="badge-tipo">Poço Natural</span>
-                        </div>
-                        <h3 class="card-titulo">Poço Dois Irmãos</h3>
-                        <div class="card-dados">
-                            <span>🚶 15 min da portaria</span>
-                            <span>💧 Água límpida</span>
-                        </div>
-                        <p class="card-desc">Um pequeno poço com queda d'água serena no PARNASO, ideal para descanso, contemplação e banho gelado nos dias de sol.</p>
-                    </div>
-                    <a href="parque.html" class="btn-card">Acessar Guia do Parque</a>
-                </div>
-            </div>
-
-        </div>
+        </section>
     </main>
 
     <footer>
-        <div class="conteudo"><br><br>
-            <p>© 2025 Terê Verde Online. Todos os direitos reservados. <br>
-            Email: contato.tereverde@email.com <br> Telefone: (21) 99999-9999</p>
+        <div class="conteudo">
+            <p>© 2026 Terê Verde Online. Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <!-- FILTRO DINÂMICO -->
     <script>
-        function filtrarCachoeiras() {
-            const parque = document.getElementById('filtro-parque-cachoeiras').value;
-            const cards = document.querySelectorAll('#grid-cachoeiras .card-item');
-            let visiveis = 0;
+        async function buscarCachoeiras() {
+            const container = document.getElementById('lista-cachoeiras');
+            try {
+                const res = await fetch('http://127.0.0.1:8000/api/cachoeiras/');
+                if (!res.ok) throw new Error();
+                const cachoeiras = await res.json();
 
-            cards.forEach(card => {
-                const parqueCard = card.getAttribute('data-parque');
-                if (parque === 'todos' || parqueCard === parque) {
-                    card.style.display = 'flex';
-                    visiveis++;
-                } else {
-                    card.style.display = 'none';
+                if (!Array.isArray(cachoeiras) || cachoeiras.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; width: 100%; color: #666;">Nenhuma cachoeira cadastrada ainda.</p>';
+                    return;
                 }
-            });
 
-            const contador = document.getElementById('contador-cachoeiras');
-            contador.innerText = `Mostrando ${visiveis} ${visiveis === 1 ? 'cachoeira' : 'cachoeiras'}`;
+                container.innerHTML = cachoeiras.map(c => `
+                    <div class="card">
+                        <div class="card-corpo">
+                            <span class="badge">${c.tipo_acesso || 'Acesso Normal'}</span>
+                            <h3>${c.nome}</h3>
+                            <p><strong>Parque:</strong> ${c.parque}</p>
+                            <p><strong>Própria para banho:</strong> ${c.propria_banho ? 'Sim' : 'Não'}</p>
+                            <p>${c.descricao || ''}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                container.innerHTML = '<p style="text-align: center; width: 100%; color: #c0392b;">Não foi possível carregar as cachoeiras da API no momento.</p>';
+            }
         }
+        buscarCachoeiras();
     </script>
 </body>
 </html>

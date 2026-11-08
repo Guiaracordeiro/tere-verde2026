@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Trilhas - Terê Verde Online</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f4f6f4; color: #333333; }
+
+        .nav-admin {
+            display: flex;
+            align-items: center;
+            background-color: #244b20;
+            padding: 14px 24px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .nav-links { display: flex; gap: 15px; align-items: center; }
+        .nav-admin a {
+            text-decoration: none !important;
+            color: #ffffff !important;
+            font-size: 0.95rem;
+            font-weight: bold;
+            padding: 8px 14px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .nav-admin a:hover { background-color: rgba(255, 255, 255, 0.15); }
+        .nav-admin a.active {
+            background-color: #142e12 !important;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+        }
+        .btn-logout {
+            margin-left: auto;
+            background-color: #c0392b;
+            color: #ffffff !important;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .btn-logout:hover { background-color: #a93226; }
+
+        .container {
+            max-width: 950px;
+            margin: 35px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        h2 { color: #244b20; margin-bottom: 25px; border-bottom: 2px solid #e1e8e1; padding-bottom: 10px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full { grid-column: span 2; }
+        label { font-weight: bold; margin-bottom: 6px; font-size: 0.9rem; color: #244b20; }
+        input, select, textarea { padding: 10px; border: 1px solid #ccd6cc; border-radius: 6px; font-size: 0.95rem; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: #244b20; }
+        .btn-salvar {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .btn-salvar:hover { background-color: #219653; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #e2e8e2; padding: 12px; text-align: left; font-size: 0.9rem; }
+        th { background-color: #244b20; color: white; }
+        tr:nth-child(even) { background-color: #f9fbf9; }
+        .btn-del { background-color: #c0392b; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="nav-admin">
+        <div class="nav-links">
+            <a href="admin-eventos.html">Gerenciar Eventos</a>
+            <a href="admin-trilhas.html" class="active">Gerenciar Trilhas</a>
+            <a href="admin-cachoeiras.html">Gerenciar Cachoeiras</a>
+        </div>
+        <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+    </div>
+
+    <div class="container">
+        <h2>Gestão de Trilhas (CRUD)</h2>
+
+        <form id="form-trilha" onsubmit="salvarTrilha(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nome da Trilha *</label>
+                    <input type="text" id="nome" required placeholder="Ex: Trilha da Pedra do Sino">
+                </div>
+                <div class="form-group">
+                    <label>Parque Vinculado *</label>
+                    <select id="parque">
+                        <option value="PARNASO">PARNASO</option>
+                        <option value="PETP">PETP</option>
+                        <option value="PNMMT">PNMMT</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Dificuldade *</label>
+                    <select id="dificuldade">
+                        <option value="Fácil">Fácil</option>
+                        <option value="Moderada">Moderada</option>
+                        <option value="Difícil">Difícil</option>
+                        <option value="Muito Difícil">Muito Difícil</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Extensão (km) *</label>
+                    <input type="number" step="0.1" id="extensao_km" required placeholder="Ex: 5.5">
+                </div>
+                <div class="form-group">
+                    <label>Tempo Estimado *</label>
+                    <input type="text" id="tempo_estimado" required placeholder="Ex: 2h 30min">
+                </div>
+                <div class="form-group">
+                    <label>Altitude Máxima (metros)</label>
+                    <input type="number" id="altitude_maxima" placeholder="Ex: 2275">
+                </div>
+                <div class="form-group full">
+                    <label>Descrição</label>
+                    <textarea id="descricao" rows="3" placeholder="Informações do trajeto..."></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn-salvar">Salvar Trilha</button>
+        </form>
+
+        <h3 style="margin-top: 45px; margin-bottom: 10px; color: #244b20;">Trilhas Cadastradas</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Parque</th>
+                    <th>Dificuldade</th>
+                    <th>Extensão</th>
+                    <th>Tempo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-trilhas">
+                <tr><td colspan="6">A carregar trilhas...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api/trilhas/';
+        const token = localStorage.getItem('token');
+        if (!token) window.location.href = 'admin-login.html';
+
+        async function carregarTrilhas() {
+            try {
+                const res = await fetch(API_URL);
+                const dados = await res.json();
+                const tbody = document.getElementById('tabela-trilhas');
+                tbody.innerHTML = '';
+
+                if (!Array.isArray(dados) || dados.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6">Nenhuma trilha cadastrada ainda.</td></tr>';
+                    return;
+                }
+
+                dados.forEach(t => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><strong>${t.nome}</strong></td>
+                            <td>${t.parque}</td>
+                            <td>${t.dificuldade}</td>
+                            <td>${t.extensao_km} km</td>
+                            <td>${t.tempo_estimado}</td>
+                            <td>
+                                <button class="btn-del" onclick="excluirTrilha('${t.id}')">Excluir</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                document.getElementById('tabela-trilhas').innerHTML = '<tr><td colspan="6" style="color:red;">Não foi possível carregar as trilhas da API.</td></tr>';
+            }
+        }
+
+        async function salvarTrilha(e) {
+            e.preventDefault();
+            const payload = {
+                nome: document.getElementById('nome').value,
+                parque: document.getElementById('parque').value,
+                dificuldade: document.getElementById('dificuldade').value,
+                extensao_km: parseFloat(document.getElementById('extensao_km').value),
+                tempo_estimado: document.getElementById('tempo_estimado').value,
+                altitude_maxima: document.getElementById('altitude_maxima').value ? parseInt(document.getElementById('altitude_maxima').value) : null,
+                descricao: document.getElementById('descricao').value
+            };
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':

@@ -3,16 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terê Verde Online - Eventos</title>
-    <link rel="stylesheet" href="CSS/style-adm.css">
-    <style>
-        .container-eventos-publico { max-width: 850px; margin: 40px auto 60px auto; padding: 0 15px; }
-        .card-evento-publico { background: #ffffff; border-radius: 8px; padding: 24px; margin-bottom: 20px; box-shadow: 0 3px 8px rgba(0,0,0,0.06); border-left: 6px solid #2e7d32; }
-        .card-evento-publico h2 { margin: 0 0 8px 0; color: #2e7d32; font-size: 22px; }
-        .card-evento-publico .detalhes { margin: 0 0 12px 0; color: #555; font-size: 14px; }
-        .card-evento-publico .descricao { color: #444; line-height: 1.6; margin: 0; font-size: 15px; }
-        .caixa-aviso { background: #ffffff; border-radius: 8px; padding: 40px; text-align: center; color: #666; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-    </style>
+    <title>Eventos e Atividades - Terê Verde Online</title>
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
     <header>
@@ -25,8 +17,8 @@
                     <li><a href="index.html">Início</a></li>
                     <li><a href="trilhas.html">Trilhas</a></li>
                     <li><a href="cachoeiras.html">Cachoeiras</a></li>
-                    <li><a href="eventos.html" style="font-weight:bold; color:#2e7d32;">Eventos</a></li>
-                    <li><a href="admin-eventos.html">Área Restrita</a></li>
+                    <li><a href="eventos.html" class="active">Eventos</a></li>
+                    <li><a href="admin-login.html">Área Restrita</a></li>
                 </ul>
             </nav>
         </div>
@@ -35,59 +27,53 @@
     <main>
         <section class="titulo-pagina">
             <div class="conteudo">
-                <h2>Eventos e Atividades Ecológicas</h2>
+                <h1>Agenda de Eventos Ecológicos</h1>
+                <p>Acompanhe mutirões, passeios guiados e encontros ao ar livre.</p>
             </div>
         </section>
 
         <section class="conteudo">
-            <div class="container-eventos-publico" id="area-eventos-dinamicos">
-                <div class="caixa-aviso">
-                    <p>A carregar eventos agendados...</p>
-                </div>
+            <div id="lista-eventos" class="grade-cards">
+                <p style="text-align: center; width: 100%; color: #666;">Carregando eventos...</p>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="conteudo"><br><br>
-            <p>© 2025 Terê Verde Online. Todos os direitos reservados.<br>
-            Email: contato.tereverde@email.com <br> Telefone: (21) 99999-9999</p>
+        <div class="conteudo">
+            <p>© 2026 Terê Verde Online. Todos os direitos reservados.</p>
         </div>
     </footer>
 
     <script>
-        async function carregarEventosPublicos() {
-            const container = document.getElementById('area-eventos-dinamicos');
+        async function buscarEventos() {
+            const container = document.getElementById('lista-eventos');
             try {
-                const resposta = await fetch('http://127.0.0.1:8000/api/eventos/');
-                const eventos = await resposta.json();
+                const res = await fetch('http://127.0.0.1:8000/api/eventos/');
+                if (!res.ok) throw new Error('Falha na resposta da API');
+                const eventos = await res.json();
 
-                if (!eventos || eventos.length === 0) {
-                    container.innerHTML = `
-                        <div class="caixa-aviso">
-                            <h3>Nenhum evento agendado de momento.</h3>
-                            <p>Fique atento às próximas atividades dos parques!</p>
-                        </div>
-                    `;
+                if (!Array.isArray(eventos) || eventos.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; width: 100%; color: #666;">Nenhum evento agendado no momento.</p>';
                     return;
                 }
 
                 container.innerHTML = eventos.map(ev => `
-                    <div class="card-evento-publico">
-                        <h2>${ev.titulo}</h2>
-                        <p class="detalhes">
-                            <strong>📅 Data:</strong> ${ev.data} &nbsp;|&nbsp; 
-                            <strong>📍 Local:</strong> ${ev.local}
-                        </p>
-                        <p class="descricao">${ev.descricao || 'Sem descrição detalhada disponível.'}</p>
+                    <div class="card">
+                        <div class="card-corpo">
+                            <span class="badge">${ev.parque_relacionado || 'Teresópolis'}</span>
+                            <h3>${ev.titulo}</h3>
+                            <p><strong>Data:</strong> ${ev.data_evento} ${ev.horario ? 'às ' + ev.horario : ''}</p>
+                            <p><strong>Local:</strong> ${ev.local || 'A definir'}</p>
+                            <p>${ev.descricao || ''}</p>
+                        </div>
                     </div>
                 `).join('');
-            } catch (erro) {
-                container.innerHTML = '<p style="color:#c0392b; text-align:center;">Não foi possível carregar os eventos. Verifique se o servidor Django está ativo.</p>';
+            } catch (err) {
+                container.innerHTML = '<p style="text-align: center; width: 100%; color: #c0392b;">Não foi possível carregar os eventos da API no momento.</p>';
             }
         }
-
-        document.addEventListener('DOMContentLoaded', carregarEventosPublicos);
+        buscarEventos();
     </script>
 </body>
 </html>

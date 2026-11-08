@@ -15,4 +15,8 @@ __pycache__/
 desktop.ini
 .DS_Store
 
+# Variáveis de ambiente e credenciais
+.env
 
+# Ambiente virtual do Python
+venv/

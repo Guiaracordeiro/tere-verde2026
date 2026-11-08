@@ -5,6 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terê Verde Online - Login Administrador</title>
     <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        .login-secao {
+            min-height: calc(100vh - 380px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .login-cartao {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 35px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e1e8e1;
+        }
+
+        .login-cartao h3 {
+            color: #2d5a27;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .login-subtitulo {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .form-grupo {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-grupo label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2d5a27;
+            margin-bottom: 6px;
+        }
+
+        .form-grupo input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #d3ded3;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .form-grupo input:focus {
+            border-color: #2d5a27;
+            box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.15);
+        }
+
+        .btn-entrar {
+            width: 100%;
+            background: #2d5a27;
+            color: #ffffff;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 5px;
+        }
+
+        .btn-entrar:hover {
+            background: #1b3817;
+        }
+
+        .btn-entrar:active {
+            transform: scale(0.99);
+        }
+
+        .erro-alerta {
+            color: #c0392b;
+            background: #fde8e7;
+            border: 1px solid #f5c2c0;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 0.88rem;
+            text-align: center;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,8 +113,8 @@
                     <li><a href="index.html">Início</a></li>
                     <li><a href="trilhas.html">Trilhas</a></li>
                     <li><a href="cachoeiras.html">Cachoeiras</a></li>
-                    <li><a href="eventos.html">Eventos</a> </li>
-                    <li><a href="admin-login.html"class="active">Login</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="admin-login.html" class="active">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -27,86 +123,82 @@
     <main>
         <section class="titulo-pagina">
             <div class="conteudo">
-                <h2>Login do Administrador</h2>
+                <h2>Painel Administrativo</h2>
+                <p>Aceda com as suas credenciais para gerir os conteúdos da plataforma.</p>
             </div>
         </section>
 
-        <section class="login-form-section-adm">
-            <div class="conteudo">
-                <div class="login-caixa caixa">
-                    <h3>Acesso Restrito</h3>
-                    <form action="#" method="post"> <div class="form-grupo">
-                            <label for="username">Usuário:</label>
-                            <input type="text" id="username" name="username" required>
-                        </div>
-                        <div class="form-grupo">
-                            <label for="password">Senha:</label>
-                            <input type="password" id="password" name="password" required>
-                        </div>
-                        <button type="submit" class="botao">Entrar</button>
-                        <p id="errorMessage" style="color: red; margin-top: 10px; display: none;">Usuário ou senha incorretos.</p>
-                    </form>
-                </div>
+        <section class="login-secao">
+            <div class="login-cartao">
+                <h3>Acesso Restrito</h3>
+                <p class="login-subtitulo">Introduza os dados de administrador</p>
+                
+                <form id="form-login">
+                    <div class="form-grupo">
+                        <label for="username">Utilizador:</label>
+                        <input type="text" id="username" name="username" placeholder="ex: admin" required autocomplete="username">
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="password">Palavra-passe:</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+
+                    <button type="submit" class="btn-entrar">Entrar no Sistema</button>
+                    <div id="errorMessage" class="erro-alerta"></div>
+                </form>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="conteudo"><br><br>
-            <p>© 2025 Terê Verde Online. 
-                Todos os direitos reservados. <br>
-                Email: contato.tereverde@email.com <br> Telefone: (21) 99999-8888</p>
+        <div class="conteudo">
+            <p>© 2026 Terê Verde Online. Todos os direitos reservados.</p>
+            <p>Email: contato.tereverde@email.com | Telefone: (21) 99999-8888</p>
         </div>
     </footer>
-<script>
-  const form = document.querySelector('form');
 
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    <script>
+        const form = document.getElementById('form-login');
 
-      // Seleciona todos os inputs do formulário pela ordem visual
-      const inputs = form.querySelectorAll('input');
-      const campoUsuario = inputs[0]; // 1º campo: Usuário / Email
-      const campoSenha = inputs[1];   // 2º campo: Senha
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-      if (!campoUsuario || !campoSenha) {
-        alert('Erro: Não foi possível localizar os campos de entrada no formulário.');
-        return;
-      }
+                const usernameInput = document.getElementById('username');
+                const passwordInput = document.getElementById('password');
+                const errorElement = document.getElementById('errorMessage');
 
-      const email = campoUsuario.value.trim();
-      const senha = campoSenha.value.trim();
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
 
-      console.log('A tentar login com:', email);
+                errorElement.style.display = 'none';
 
-      try {
-        const resposta = await fetch('http://127.0.0.1:8000/api/login/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email: email, senha: senha })
-        });
+                try {
+                    const resposta = await fetch('http://127.0.0.1:8000/api/login/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
 
-        const dados = await resposta.json();
-        console.log('Resposta do servidor:', dados);
+                    const dados = await resposta.json();
 
-        if (resposta.ok) {
-          // Guarda o token no armazenamento do navegador
-          localStorage.setItem('adminToken', dados.token);
-          alert('Login efetuado com sucesso! Bem-vindo, ' + dados.admin);
-          window.location.href = 'admin-eventos.html';
-        } else {
-          alert(dados.erro || 'Credenciais inválidas.');
+                    if (resposta.ok) {
+                        localStorage.setItem('token', dados.token);
+                        window.location.href = 'admin-eventos.html';
+                    } else {
+                        errorElement.innerText = dados.erro || 'Credenciais inválidas. Verifique o utilizador e a palavra-passe.';
+                        errorElement.style.display = 'block';
+                    }
+                } catch (erro) {
+                    console.error('Falha de ligação:', erro);
+                    errorElement.innerText = 'Não foi possível ligar ao servidor Django (verifique se o runserver está ativo).';
+                    errorElement.style.display = 'block';
+                }
+            });
         }
-      } catch (erro) {
-        console.error('Falha de ligação:', erro);
-        alert('Não foi possível conectar ao servidor. Verifica se o backend (runserver) está ativo.');
-      }
-    });
-  }
-</script>
-    </body>
-
+    </script>
+</body>
 </html>
