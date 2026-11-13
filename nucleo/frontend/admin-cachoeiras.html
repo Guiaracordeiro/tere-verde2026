@@ -1,340 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo - Cachoeiras</title>
-    <style>
-        /* RESET E CORREÇÕES FORÇADAS */
-        * {
-            box-sizing: border-box !important;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif !important;
-        }
-
-        body {
-            background-color: #f4f6f4 !important;
-            color: #333333 !important;
-            min-height: 100vh;
-        }
-
-        /* BARRA DE NAVEGAÇÃO SUPERIOR */
-        .nav-admin {
-            display: flex !important;
-            align-items: center !important;
-            background-color: #244b20 !important;
-            padding: 14px 24px !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.18) !important;
-            width: 100% !important;
-        }
-
-        .nav-links {
-            display: flex !important;
-            gap: 12px !important;
-            align-items: center !important;
-        }
-
-        /* FORÇA TEXTO BRANCO E NÍTIDO NOS BOTÕES */
-        .nav-admin a {
-            text-decoration: none !important;
-            color: #ffffff !important;
-            font-size: 0.95rem !important;
-            font-weight: bold !important;
-            padding: 8px 16px !important;
-            border-radius: 6px !important;
-            background: transparent !important;
-            border: 1px solid transparent !important;
-            display: inline-block !important;
-            line-height: normal !important;
-        }
-
-        .nav-admin a:hover {
-            background-color: rgba(255, 255, 255, 0.15) !important;
-            color: #ffffff !important;
-        }
-
-        .nav-admin a.active {
-            background-color: #142e12 !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            color: #ffffff !important;
-        }
-
-        .btn-logout {
-            margin-left: auto !important;
-            background-color: #c0392b !important;
-            color: #ffffff !important;
-            border: none !important;
-            padding: 9px 18px !important;
-            border-radius: 6px !important;
-            cursor: pointer !important;
-            font-weight: bold !important;
-            font-size: 0.9rem !important;
-            transition: background 0.2s ease !important;
-        }
-
-        .btn-logout:hover {
-            background-color: #a93226 !important;
-        }
-
-        /* ÁREA PRINCIPAL DO FORMULÁRIO */
-        .container {
-            max-width: 950px;
-            margin: 30px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        h2 {
-            color: #244b20;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #e1e8e1;
-            padding-bottom: 10px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full {
-            grid-column: span 2;
-        }
-
-        label {
-            font-weight: bold;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-            color: #244b20;
-        }
-
-        input, select, textarea {
-            padding: 10px 12px;
-            border: 1px solid #ccd6cc;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            outline: none;
-            width: 100%;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: #244b20;
-            box-shadow: 0 0 0 2px rgba(36, 75, 32, 0.15);
-        }
-
-        .btn-salvar {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
-
-        .btn-salvar:hover {
-            background-color: #219653;
-        }
-
-        /* TABELA DE LISTAGEM */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #e2e8e2;
-            padding: 12px;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        th {
-            background-color: #244b20;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9fbf9;
-        }
-
-        .btn-del {
-            background-color: #c0392b;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-del:hover {
-            background-color: #a93226;
-        }
-    </style>
+<head>a
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Cachoeiras — Terê Verde Online</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f5; color: #1b2e1e; margin: 0; }
+    header { background: #ffffff; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    header nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+    header nav a { text-decoration: none; color: #244b20; font-weight: 600; }
+    header nav a.ativo { border-bottom: 2px solid #244b20; padding-bottom: 4px; }
+    .container { max-width: 920px; margin: 32px auto; padding: 0 20px; }
+    h1, h2 { color: #244b20; }
+    .card-form { background: #fff; padding: 28px; border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); margin-bottom: 32px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 16px; }
+    .btn-salvar { background: #244b20; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .btn-salvar:hover { background: #1a3817; }
+    .btn-cancelar { background: #718096; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; display: none; margin-left: 10px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+    .item-card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; }
+    .item-card img { width: 100%; height: 165px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+    .acoes-card { display: flex; gap: 8px; margin-top: 12px; }
+    .btn-editar { background: #2980b9; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; flex: 1; text-align: center; }
+    .btn-excluir { background: #c0392b; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; flex: 1; text-align: center; }
+  </style>
 </head>
 <body>
-    <div class="nav-admin">
-        <div class="nav-links">
-            <a href="admin-eventos.html">Gerenciar Eventos</a>
-            <a href="admin-trilhas.html">Gerenciar Trilhas</a>
-            <a href="admin-cachoeiras.html" class="active">Gerenciar Cachoeiras</a>
+  <header>
+    <a href="index.html" style="font-weight:800; font-size:1.25rem; color:#244b20; text-decoration:none;">🌿 TERÊ VERDE ONLINE</a>
+    <nav>
+      <ul>
+        <li><a href="admin-trilhas.html">Trilhas</a></li>
+        <li><a href="admin-cachoeiras.html" class="ativo">Cachoeiras</a></li>
+        <li><a href="admin-eventos.html">Eventos</a></li>
+        <li><a href="index.html">Ver Site</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 id="tituloForm">Gerenciar Cachoeiras</h1>
+
+    <form id="formCachoeira" class="card-form" enctype="multipart/form-data">
+      <input type="hidden" id="cachoeiraId" name="cachoeiraId">
+
+      <div class="form-group">
+        <label>Nome da Cachoeira</label>
+        <input type="text" id="nome" name="nome" required placeholder="Ex: Cachoeira Véu da Noiva">
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group" style="margin:0">
+          <label>Parque</label>
+          <select id="parque" name="parque" required>
+            <option value="PARNASO">PARNASO</option>
+            <option value="PETP">Parque Estadual dos Três Picos (PETP)</option>
+            <option value="PNMMT">Parque Natural Municipal Montanhas de Teresópolis</option>
+          </select>
         </div>
-        <button class="btn-logout" onclick="fazerLogout()">Sair</button>
-    </div>
+        <div class="form-group" style="margin:0">
+          <label>Condição para Banho</label>
+          <select id="propria_banho" name="propria_banho">
+            <option value="true">Própria para Banho</option>
+            <option value="false">Apenas Contemplação / Imprópria</option>
+          </select>
+        </div>
+      </div>
 
-    <div class="container">
-        <h2>Gestão de Cachoeiras (CRUD)</h2>
+      <div class="form-group">
+        <label>Nível de Acesso</label>
+        <input type="text" id="acesso" name="acesso" placeholder="Ex: Trilha leve de 15 min">
+      </div>
 
-        <form id="form-cachoeira" onsubmit="salvarCachoeira(event)">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Nome da Cachoeira / Poço *</label>
-                    <input type="text" id="nome" required placeholder="Ex: Cachoeira do Véu da Noiva">
-                </div>
-                <div class="form-group">
-                    <label>Parque Vinculado *</label>
-                    <select id="parque">
-                        <option value="PARNASO">PARNASO</option>
-                        <option value="PETP">PETP</option>
-                        <option value="PNMMT">PNMMT</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Própria para Banho? (Balneabilidade) *</label>
-                    <select id="propria_banho">
-                        <option value="true">Sim (Própria para banho)</option>
-                        <option value="false">Não (Apenas contemplação / Perigosa)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Tipo de Acesso *</label>
-                    <input type="text" id="tipo_acesso" required placeholder="Ex: Trilha Fácil (10 min)">
-                </div>
-                <div class="form-group full">
-                    <label>Descrição</label>
-                    <textarea id="descricao" rows="3" placeholder="Detalhes e avisos sobre o local..."></textarea>
-                </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="descricao" name="descricao" rows="3" placeholder="Detalhes sobre o poço e regras..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Foto da Cachoeira (JPG, PNG, WEBP)</label>
+        <input type="file" name="imagem" accept="image/*" onchange="mostrarPreview(event, 'prevCachoeira')">
+        <img id="prevCachoeira" src="" alt="Prévia" style="display:none; margin-top:10px; max-height:160px; border-radius:8px;">
+      </div>
+
+      <div style="display: flex; align-items: center;">
+        <button type="submit" id="btnSalvar" class="btn-salvar">Salvar Cachoeira</button>
+        <button type="button" id="btnCancelar" class="btn-cancelar" onclick="limparFormulario()">Cancelar</button>
+      </div>
+    </form>
+
+    <h2>Cachoeiras Cadastradas</h2>
+    <div id="listaCachoeiras" class="cards-grid"></div>
+  </main>
+
+  <script>
+    const API_URL = 'http://127.0.0.1:8000/api/cachoeiras/';
+    const token = localStorage.getItem('admin_token') || localStorage.getItem('token') || 'token_tere_verde_admin_2026';
+    let cachoeirasCache = [];
+
+    function mostrarPreview(event, imgId) {
+      const arquivo = event.target.files[0];
+      const preview = document.getElementById(imgId);
+      if (arquivo) {
+        preview.src = URL.createObjectURL(arquivo);
+        preview.style.display = 'block';
+      }
+    }
+
+    async function carregarCachoeiras() {
+      const container = document.getElementById('listaCachoeiras');
+      try {
+        const resp = await fetch(API_URL);
+        const dados = await resp.json();
+        cachoeirasCache = dados;
+        if (!dados.length) {
+          container.innerHTML = '<p>Nenhuma cachoeira cadastrada ainda.</p>';
+          return;
+        }
+        container.innerHTML = dados.map(c => `
+          <div class="item-card">
+            <div>
+              ${c.imagem_url ? `<img src="${c.imagem_url}" alt="${c.nome}">` : ''}
+              <h3 style="margin:0 0 6px 0;">${c.nome}</h3>
+              <p style="margin:0 0 8px 0; font-size:0.9rem; color:#4b5563;"><strong>${c.parque}</strong> • ${c.propria_banho ? 'Própria para banho' : 'Contemplação'}</p>
+              <p style="font-size:0.9rem;">${c.descricao || ''}</p>
             </div>
-            <button type="submit" class="btn-salvar">Salvar Cachoeira</button>
-        </form>
+            <div class="acoes-card">
+              <button class="btn-editar" onclick="prepararEdicao('${c.id}')">Editar</button>
+              <button class="btn-excluir" onclick="excluirCachoeira('${c.id}')">Excluir</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = '<p style="color:#c0392b;">⚠️ Servidor Django offline. Rode <b>python manage.py runserver</b> no terminal.</p>';
+      }
+    }
 
-        <h3 style="margin-top: 45px; margin-bottom: 10px; color: #244b20;">Cachoeiras Cadastradas</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Parque</th>
-                    <th>Banho</th>
-                    <th>Acesso</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-cachoeiras">
-                <tr><td colspan="5">A carregar cachoeiras...</td></tr>
-            </tbody>
-        </table>
-    </div>
+    function prepararEdicao(id) {
+      const c = cachoeirasCache.find(item => item.id === id);
+      if (!c) return;
+      document.getElementById('cachoeiraId').value = c.id;
+      document.getElementById('nome').value = c.nome || '';
+      document.getElementById('parque').value = c.parque || 'PARNASO';
+      document.getElementById('propria_banho').value = String(c.propria_banho ?? true);
+      document.getElementById('acesso').value = c.acesso || '';
+      document.getElementById('descricao').value = c.descricao || '';
+      
+      document.getElementById('tituloForm').innerText = 'Editar Cachoeira';
+      document.getElementById('btnSalvar').innerText = 'Atualizar Cachoeira';
+      document.getElementById('btnCancelar').style.display = 'inline-block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-    <script>
-        const API_URL = 'http://127.0.0.1:8000/api/cachoeiras/';
-        const token = localStorage.getItem('token');
-        if (!token) window.location.href = 'admin-login.html';
+    function limparFormulario() {
+      document.getElementById('formCachoeira').reset();
+      document.getElementById('cachoeiraId').value = '';
+      document.getElementById('prevCachoeira').style.display = 'none';
+      document.getElementById('tituloForm').innerText = 'Gerenciar Cachoeiras';
+      document.getElementById('btnSalvar').innerText = 'Salvar Cachoeira';
+      document.getElementById('btnCancelar').style.display = 'none';
+    }
 
-        async function carregarCachoeiras() {
-            try {
-                const res = await fetch(API_URL);
-                const dados = await res.json();
-                const tbody = document.getElementById('tabela-cachoeiras');
-                tbody.innerHTML = '';
+    document.getElementById('formCachoeira').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('cachoeiraId').value;
+      const formData = new FormData(this);
+      
+      const url = id ? `${API_URL}${id}/` : API_URL;
+      const metodo = id ? 'PUT' : 'POST';
 
-                if (!Array.isArray(dados) || dados.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5">Nenhuma cachoeira cadastrada ainda.</td></tr>';
-                    return;
-                }
+      const resp = await fetch(url, {
+        method: metodo,
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
 
-                dados.forEach(c => {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td><strong>${c.nome}</strong></td>
-                            <td>${c.parque}</td>
-                            <td>${c.propria_banho ? 'Sim' : 'Não'}</td>
-                            <td>${c.tipo_acesso}</td>
-                            <td>
-                                <button class="btn-del" onclick="excluirCachoeira('${c.id}')">Excluir</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            } catch (err) {
-                document.getElementById('tabela-cachoeiras').innerHTML = '<tr><td colspan="5" style="color:red;">Não foi possível ligar ao servidor ou carregar os dados.</td></tr>';
-            }
-        }
-
-        async function salvarCachoeira(e) {
-            e.preventDefault();
-            const payload = {
-                nome: document.getElementById('nome').value,
-                parque: document.getElementById('parque').value,
-                propria_banho: document.getElementById('propria_banho').value === 'true',
-                tipo_acesso: document.getElementById('tipo_acesso').value,
-                descricao: document.getElementById('descricao').value
-            };
-
-            try {
-                const res = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (res.ok) {
-                    alert('Cachoeira guardada com sucesso!');
-                    document.getElementById('form-cachoeira').reset();
-                    carregarCachoeiras();
-                } else {
-                    const erro = await res.json();
-                    alert('Erro ao guardar: ' + (erro.erro || 'Falha na requisição.'));
-                }
-            } catch (err) {
-                alert('Erro de comunicação com o servidor.');
-            }
-        }
-
-        async function excluirCachoeira(id) {
-            if (!confirm('Deseja realmente eliminar esta cachoeira?')) return;
-            try {
-                const res = await fetch(`${API_URL}${id}/`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (res.ok) carregarCachoeiras();
-            } catch (err) {
-                alert('Erro ao eliminar cachoeira.');
-            }
-        }
-
-        function fazerLogout() {
-            localStorage.clear();
-            window.location.href = 'admin-login.html';
-        }
-
+      if (resp.ok) {
+        limparFormulario();
         carregarCachoeiras();
-    </script>
+      } else {
+        const erro = await resp.json();
+        console.error(erro);
+      }
+    });
+
+    async function excluirCachoeira(id) {
+      if (!confirm('Deseja realmente excluir esta cachoeira?')) return;
+      await fetch(`${API_URL}${id}/`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      carregarCachoeiras();
+    }
+
+    carregarCachoeiras();
+  </script>
 </body>
 </html>

@@ -1,27 +1,12 @@
 from django.urls import path
-from .views import (
-    LoginView,
-    EventosListCreateView,
-    EventoDetailView,
-    TrilhasListCreateView,
-    TrilhaDetailView,
-    CachoeirasListCreateView,
-    CachoeiraDetailView
-)
+from . import views
 
 urlpatterns = [
-    # Rota de Login
-    path('api/login/', LoginView.as_view(), name='api-login'),
-
-    # Rotas de Eventos
-    path('api/eventos/', EventosListCreateView.as_view(), name='api-eventos'),
-    path('api/eventos/<str:id>/', EventoDetailView.as_view(), name='api-evento-detail'),
-
-    # Rotas de Trilhas
-    path('api/trilhas/', TrilhasListCreateView.as_view(), name='api-trilhas'),
-    path('api/trilhas/<str:id>/', TrilhaDetailView.as_view(), name='api-trilha-detail'),
-
-    # Rotas de Cachoeiras
-    path('api/cachoeiras/', CachoeirasListCreateView.as_view(), name='api-cachoeiras'),
-    path('api/cachoeiras/<str:id>/', CachoeiraDetailView.as_view(), name='api-cachoeira-detail'),
+    path('login/', views.admin_login, name='admin_login'),
+    path('trilhas/', views.trilhas_list_create, name='trilhas_list_create'),
+    path('trilhas/<str:item_id>/', views.trilha_delete, name='trilha_delete'),
+    path('cachoeiras/', views.cachoeiras_list_create, name='cachoeiras_list_create'),
+    path('cachoeiras/<str:item_id>/', views.cachoeira_delete, name='cachoeira_delete'),
+    path('eventos/', views.eventos_list_create, name='eventos_list_create'),
+    path('eventos/<str:item_id>/', views.evento_delete, name='evento_delete'),
 ]

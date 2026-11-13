@@ -1,206 +1,170 @@
 import os
+import uuid
 import certifi
-from dotenv import load_dotenv
 from bson import ObjectId
 from pymongo import MongoClient
-from rest_framework.views import APIView
+from dotenv import load_dotenv
+
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import BasePermission, AllowAny
 
-# ==============================================================================
-# CARREGAMENTO DE VARIÁVEIS DE AMBIENTE (.env)
-# ==============================================================================
 load_dotenv()
 
-# ==============================================================================
-# CONFIGURAÇÃO DE PERSISTÊNCIA - MONGODB ATLAS (RNF04)
-# ==============================================================================
+# Conexão segura com MongoDB Atlas
 MONGO_URI = os.getenv("MONGO_URI")
+ADMIN_USER = os.getenv("ADMIN_USER", "admin")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "123456")
+ADMIN_TOKEN = "token_tere_verde_admin_2026"
 
-if not MONGO_URI:
-    print(">>> AVISO: Variável MONGO_URI não encontrada no arquivo .env! <<<")
-
-client = MongoClient(
-    MONGO_URI,
-    tlsCAFile=certifi.where(),
-    serverSelectionTimeoutMS=5000
-)
+client = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
 db = client["tere_verde_db"]
 
-col_eventos = db["eventos"]
 col_trilhas = db["trilhas"]
 col_cachoeiras = db["cachoeiras"]
+col_eventos = db["eventos"]
 
-TOKEN_ADMIN_VALIDO = "token-autenticacao-admin-tere-verde-2026"
 
-# Helper para converter ObjectId do MongoDB em String JSON
-def serialize_doc(doc):
-    if doc and "_id" in doc:
-        doc["id"] = str(doc["_id"])
-        del doc["_id"]
+def verificar_token(request):
+    """Valida o cabeçalho Authorization: Bearer <token>."""
+    auth = request.headers.get("Authorization", "")
+    return auth == f"Bearer {ADMIN_TOKEN}"
+
+
+def salvar_imagem_upload(request):
+    """Salva a foto enviada no campo 'imagem' e devolve a URL pública."""
+    arquivo = request.FILES.get("imagem")
+    if not arquivo:
+        return ""
+    extensao = arquivo.name.split(".")[-1]
+    nome_unico = f"uploads/{uuid.uuid4().hex}.{extensao}"
+    caminho_salvo = default_storage.save(nome_unico, ContentFile(arquivo.read()))
+    return f"http://127.0.0.1:8000/media/{caminho_salvo}"
+
+
+def serializar_doc(doc):
+    """Converte o _id do MongoDB para string 'id'."""
+    doc["id"] = str(doc.pop("_id"))
     return doc
 
-# ==============================================================================
-# CONTROLE DE ACESSO E SEGURANÇA (RNF03)
-# ==============================================================================
-class IsAdminTokenValid(BasePermission):
-    """
-    Permite leitura (GET) pública para qualquer visitante.
-    Exige cabeçalho 'Authorization: Bearer <token>' para POST, PUT e DELETE.
-    """
-    def has_permission(self, request, view):
-        if request.method in ['GET', 'HEAD', 'OPTIONS']:
-            return True
 
-        auth_header = request.headers.get('Authorization', '')
-        if auth_header.startswith('Bearer '):
-            token = auth_header.split(' ')[1]
-            return token == TOKEN_ADMIN_VALIDO
-        return False
+# ================= LOGIN ADMINISTRATIVO =================
+@api_view(["POST"])
+def admin_login(request):
+    usuario = request.data.get("usuario") or request.data.get("username")
+    senha = request.data.get("senha") or request.data.get("password")
 
-# ==============================================================================
-# LOGIN ADMINISTRATIVO (Lê credenciais do .env para evitar alerta do navegador)
-# ==============================================================================
-class LoginView(APIView):
-    permission_classes = [AllowAny]
+    if usuario == ADMIN_USER and senha == ADMIN_PASSWORD:
+        return Response({"token": ADMIN_TOKEN, "mensagem": "Login realizado com sucesso!"})
+    return Response({"erro": "Usuário ou senha inválidos."}, status=status.HTTP_401_UNAUTHORIZED)
 
-    def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
 
-        # Lê do .env ou usa valores seguros como fallback
-        expected_user = os.getenv("ADMIN_USER", "admin_tere")
-        expected_pass = os.getenv("ADMIN_PASSWORD", "TereVerde2026")
+# ================= TRILHAS =================
+@api_view(["GET", "POST"])
+@parser_classes([MultiPartParser, FormParser, JSONParser])
+def trilhas_list_create(request):
+    if request.method == "GET":
+        trilhas = [serializar_doc(t) for t in col_trilhas.find()]
+        return Response(trilhas)
 
-        if username == expected_user and password == expected_pass:
-            return Response({"token": TOKEN_ADMIN_VALIDO}, status=status.HTTP_200_OK)
+    if not verificar_token(request):
+        return Response({"erro": "Não autorizado."}, status=status.HTTP_401_UNAUTHORIZED)
 
-        return Response(
-            {"erro": "Usuário ou senha incorretos."},
-            status=status.HTTP_401_UNAUTHORIZED
-        )
+    imagem_url = salvar_imagem_upload(request)
+    novo_doc = {
+        "nome": request.data.get("nome", ""),
+        "parque": request.data.get("parque", ""),
+        "dificuldade": request.data.get("dificuldade", ""),
+        "distancia": request.data.get("distancia", ""),
+        "tempo": request.data.get("tempo", ""),
+        "altitude": request.data.get("altitude", ""),
+        "descricao": request.data.get("descricao", ""),
+        "imagem_url": imagem_url,
+    }
+    res = col_trilhas.insert_one(novo_doc)
+    novo_doc["id"] = str(res.inserted_id)
+    novo_doc.pop("_id", None)
+    return Response(novo_doc, status=status.HTTP_201_CREATED)
 
-# ==============================================================================
-# CRUD - EVENTOS
-# ==============================================================================
-class EventosListCreateView(APIView):
-    permission_classes = [IsAdminTokenValid]
 
-    def get(self, request):
-        eventos = [serialize_doc(doc) for doc in col_eventos.find()]
-        return Response(eventos, status=status.HTTP_200_OK)
+@api_view(["DELETE"])
+def trilha_delete(request, item_id):
+    if not verificar_token(request):
+        return Response({"erro": "Não autorizado."}, status=status.HTTP_401_UNAUTHORIZED)
+    col_trilhas.delete_one({"_id": ObjectId(item_id)})
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def post(self, request):
-        dados = request.data.copy()
-        if not dados.get("titulo") or not dados.get("data_evento"):
-            return Response({"erro": "Campos obrigatórios ausentes."}, status=status.HTTP_400_BAD_REQUEST)
-        
-        resultado = col_eventos.insert_one(dados)
-        dados["id"] = str(resultado.inserted_id)
-        if "_id" in dados:
-            del dados["_id"]
-        return Response(dados, status=status.HTTP_201_CREATED)
 
-class EventoDetailView(APIView):
-    permission_classes = [IsAdminTokenValid]
+# ================= CACHOEIRAS =================
+@api_view(["GET", "POST"])
+@parser_classes([MultiPartParser, FormParser, JSONParser])
+def cachoeiras_list_create(request):
+    if request.method == "GET":
+        cachoeiras = [serializar_doc(c) for c in col_cachoeiras.find()]
+        return Response(cachoeiras)
 
-    def get(self, request, id):
-        try:
-            doc = col_eventos.find_one({"_id": ObjectId(id)})
-            if not doc:
-                return Response({"erro": "Evento não encontrado."}, status=status.HTTP_404_NOT_FOUND)
-            return Response(serialize_doc(doc), status=status.HTTP_200_OK)
-        except Exception:
-            return Response({"erro": "ID inválido."}, status=status.HTTP_400_BAD_REQUEST)
+    if not verificar_token(request):
+        return Response({"erro": "Não autorizado."}, status=status.HTTP_401_UNAUTHORIZED)
 
-    def put(self, request, id):
-        try:
-            dados = request.data.copy()
-            if "_id" in dados:
-                del dados["_id"]
-            if "id" in dados:
-                del dados["id"]
-                
-            res = col_eventos.update_one({"_id": ObjectId(id)}, {"$set": dados})
-            if res.matched_count == 0:
-                return Response({"erro": "Evento não encontrado."}, status=status.HTTP_404_NOT_FOUND)
-            dados["id"] = id
-            return Response(dados, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"erro": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    imagem_url = salvar_imagem_upload(request)
+    banho_raw = str(request.data.get("propria_banho", "")).lower()
+    propria_banho = banho_raw in ["true", "1", "sim", "on"]
 
-    def delete(self, request, id):
-        try:
-            res = col_eventos.delete_one({"_id": ObjectId(id)})
-            if res.deleted_count == 0:
-                return Response({"erro": "Evento não encontrado."}, status=status.HTTP_404_NOT_FOUND)
-            return Response({"mensagem": "Evento removido com sucesso."}, status=status.HTTP_200_OK)
-        except Exception:
-            return Response({"erro": "ID inválido."}, status=status.HTTP_400_BAD_REQUEST)
+    novo_doc = {
+        "nome": request.data.get("nome", ""),
+        "parque": request.data.get("parque", ""),
+        "acesso": request.data.get("acesso", ""),
+        "propria_banho": propria_banho,
+        "descricao": request.data.get("descricao", ""),
+        "imagem_url": imagem_url,
+    }
+    res = col_cachoeiras.insert_one(novo_doc)
+    novo_doc["id"] = str(res.inserted_id)
+    novo_doc.pop("_id", None)
+    return Response(novo_doc, status=status.HTTP_201_CREATED)
 
-# ==============================================================================
-# CRUD - TRILHAS
-# ==============================================================================
-class TrilhasListCreateView(APIView):
-    permission_classes = [IsAdminTokenValid]
 
-    def get(self, request):
-        trilhas = [serialize_doc(doc) for doc in col_trilhas.find()]
-        return Response(trilhas, status=status.HTTP_200_OK)
+@api_view(["DELETE"])
+def cachoeira_delete(request, item_id):
+    if not verificar_token(request):
+        return Response({"erro": "Não autorizado."}, status=status.HTTP_401_UNAUTHORIZED)
+    col_cachoeiras.delete_one({"_id": ObjectId(item_id)})
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def post(self, request):
-        dados = request.data.copy()
-        if not dados.get("nome") or not dados.get("parque"):
-            return Response({"erro": "Campos obrigatórios ausentes."}, status=status.HTTP_400_BAD_REQUEST)
-        
-        resultado = col_trilhas.insert_one(dados)
-        dados["id"] = str(resultado.inserted_id)
-        if "_id" in dados:
-            del dados["_id"]
-        return Response(dados, status=status.HTTP_201_CREATED)
 
-class TrilhaDetailView(APIView):
-    permission_classes = [IsAdminTokenValid]
+# ================= EVENTOS =================
+@api_view(["GET", "POST"])
+@parser_classes([MultiPartParser, FormParser, JSONParser])
+def eventos_list_create(request):
+    if request.method == "GET":
+        eventos = [serializar_doc(e) for e in col_eventos.find()]
+        return Response(eventos)
 
-    def delete(self, request, id):
-        try:
-            res = col_trilhas.delete_one({"_id": ObjectId(id)})
-            if res.deleted_count == 0:
-                return Response({"erro": "Trilha não encontrada."}, status=status.HTTP_404_NOT_FOUND)
-            return Response({"mensagem": "Trilha removida com sucesso."}, status=status.HTTP_200_OK)
-        except Exception:
-            return Response({"erro": "ID inválido."}, status=status.HTTP_400_BAD_REQUEST)
+    if not verificar_token(request):
+        return Response({"erro": "Não autorizado."}, status=status.HTTP_401_UNAUTHORIZED)
 
-# ==============================================================================
-# CRUD - CACHOEIRAS
-# ==============================================================================
-class CachoeirasListCreateView(APIView):
-    permission_classes = [IsAdminTokenValid]
+    imagem_url = salvar_imagem_upload(request)
+    novo_doc = {
+        "titulo": request.data.get("titulo", ""),
+        "parque": request.data.get("parque", ""),
+        "data_evento": request.data.get("data_evento", ""),
+        "horario": request.data.get("horario", ""),
+        "local": request.data.get("local", ""),
+        "descricao": request.data.get("descricao", ""),
+        "imagem_url": imagem_url,
+    }
+    res = col_eventos.insert_one(novo_doc)
+    novo_doc["id"] = str(res.inserted_id)
+    novo_doc.pop("_id", None)
+    return Response(novo_doc, status=status.HTTP_201_CREATED)
 
-    def get(self, request):
-        cachoeiras = [serialize_doc(doc) for doc in col_cachoeiras.find()]
-        return Response(cachoeiras, status=status.HTTP_200_OK)
 
-    def post(self, request):
-        dados = request.data.copy()
-        if not dados.get("nome") or not dados.get("parque"):
-            return Response({"erro": "Campos obrigatórios ausentes."}, status=status.HTTP_400_BAD_REQUEST)
-        
-        resultado = col_cachoeiras.insert_one(dados)
-        dados["id"] = str(resultado.inserted_id)
-        if "_id" in dados:
-            del dados["_id"]
-        return Response(dados, status=status.HTTP_201_CREATED)
-
-class CachoeiraDetailView(APIView):
-    permission_classes = [IsAdminTokenValid]
-
-    def delete(self, request, id):
-        try:
-            res = col_cachoeiras.delete_one({"_id": ObjectId(id)})
-            if res.deleted_count == 0:
-                return Response({"erro": "Cachoeira não encontrada."}, status=status.HTTP_404_NOT_FOUND)
-            return Response({"mensagem": "Cachoeira removida com sucesso."}, status=status.HTTP_200_OK)
-        except Exception:
-            return Response({"erro": "ID inválido."}, status=status.HTTP_400_BAD_REQUEST)
+@api_view(["DELETE"])
+def evento_delete(request, item_id):
+    if not verificar_token(request):
+        return Response({"erro": "Não autorizado."}, status=status.HTTP_401_UNAUTHORIZED)
+    col_eventos.delete_one({"_id": ObjectId(item_id)})
+    return Response(status=status.HTTP_204_NO_CONTENT)

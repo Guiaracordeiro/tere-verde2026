@@ -1,82 +1,556 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terê Verde Online - Início</title>
-    <link rel="stylesheet" href="CSS/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terê Verde Online — O Portal de Ecoturismo de Teresópolis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    :root {
+      --forest-dark: #0c1f13;
+      --forest: #123D2A;
+      --nature: #198754;
+      --nature-light: #36C982;
+      --suave: #E8F5EC;
+      --white: #FFFFFF;
+      --gray-light: #F5F7F5;
+      --gray-dark: #26332C;
+      --gray-text: #4e6355;
+      --shadow-sm: 0 4px 12px rgba(18, 61, 42, 0.06);
+      --shadow-md: 0 10px 30px rgba(18, 61, 42, 0.12);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--gray-light);
+      color: var(--gray-dark);
+      line-height: 1.6;
+    }
+
+    /* ================= HEADER PROFISSIONAL ================= */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--forest);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--nature-light), var(--nature));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      box-shadow: 0 4px 12px rgba(54, 201, 130, 0.3);
+    }
+    .logo-text h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .logo-text span {
+      font-size: 11px;
+      color: var(--nature-light);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-menu a {
+      text-decoration: none;
+      color: #d1fae5;
+      font-weight: 500;
+      font-size: 15px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-menu a:hover, .nav-menu a.ativo {
+      color: var(--nature-light);
+    }
+    .nav-menu a.ativo {
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-box input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 16px 8px 38px;
+      border-radius: 99px;
+      color: white;
+      font-size: 14px;
+      width: 200px;
+      transition: var(--transition);
+    }
+    .search-box input::placeholder { color: #9ca3af; }
+    .search-box input:focus {
+      width: 250px;
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--nature-light);
+      outline: none;
+    }
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      color: #9ca3af;
+      font-size: 13px;
+    }
+
+    .btn-admin {
+      background: var(--nature);
+      color: white;
+      padding: 9px 18px;
+      border-radius: 99px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-admin:hover { background: #146c43; }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* ================= BANNER HERO / CARROSSEL ================= */
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 580px;
+      overflow: hidden;
+      background: var(--forest-dark);
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      pointer-events: none;
+    }
+    .hero-slide.ativo {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .hero-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.65);
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 70px;
+      left: 10%;
+      max-width: 700px;
+      color: var(--white);
+      z-index: 5;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(25, 135, 84, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 6px 16px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #d1fae5;
+    }
+    .hero-content h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero-content p {
+      font-size: 18px;
+      color: #e5e7eb;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--nature-light);
+      color: var(--forest-dark);
+      padding: 14px 28px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .hero-btn:hover { background: #2ab871; }
+
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(18, 61, 42, 0.6);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider-arrow:hover { background: var(--nature); }
+    .slider-arrow.prev { left: 28px; }
+    .slider-arrow.next { right: 28px; }
+    
+    .slider-dots {
+      position: absolute;
+      bottom: 24px;
+      right: 10%;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    .slider-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.4);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .slider-dot.ativo { width: 30px; background: var(--nature-light); }
+
+    /* ================= CONTEÚDO PRINCIPAL ================= */
+    .main-container { max-width: 1280px; margin: 0 auto; padding: 64px 32px; }
+    .section-header { text-align: center; max-width: 700px; margin: 0 auto 48px auto; }
+    .section-tag { font-size: 13px; font-weight: 700; color: var(--nature); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; display: block; }
+    .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; color: var(--forest-dark); margin-bottom: 14px; }
+    .section-desc { font-size: 16px; color: var(--gray-text); }
+
+    .categorias-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-bottom: 72px; }
+    .categoria-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid #e1ece5; transition: var(--transition); }
+    .categoria-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .card-img-wrapper { height: 200px; overflow: hidden; position: relative; }
+    .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .categoria-card:hover .card-img-wrapper img { transform: scale(1.06); }
+    .card-badge-top { position: absolute; top: 14px; right: 14px; background: rgba(18, 61, 42, 0.85); color: white; padding: 5px 12px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+    .card-body { padding: 24px; }
+    .card-body h3 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; color: var(--forest-dark); margin-bottom: 10px; }
+    .card-body p { font-size: 14px; color: var(--gray-text); margin-bottom: 20px; }
+    .card-link { color: var(--nature); font-weight: 700; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+
+    /* ================= RODAPÉ ================= */
+    footer { background-color: var(--forest-dark); color: #d1fae5; padding: 64px 32px 32px 32px; }
+    .footer-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 40px; margin-bottom: 48px; }
+    .footer-col h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; color: white; margin-bottom: 18px; }
+    .footer-col p { font-size: 14px; color: #9ca3af; line-height: 1.6; margin-bottom: 18px; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { color: #9ca3af; text-decoration: none; font-size: 14px; transition: var(--transition); }
+    .footer-links a:hover { color: var(--nature-light); }
+    .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; font-size: 13px; color: #9ca3af; }
+
+    @media(max-width: 768px) {
+      .nav-menu, .header-actions { display: none; }
+      .mobile-toggle { display: block; }
+      .footer-container { grid-template-columns: 1fr; }
+    }
+    .mobile-menu-drawer { display: none; background: var(--forest); padding: 20px 32px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .mobile-menu-drawer.ativo { display: block; }
+    .mobile-menu-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .mobile-menu-drawer a { color: white; text-decoration: none; font-weight: 600; }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="conteudo">
-            <a href="index.html">
-                <img src="img/tere verde sem fundo.png" alt="Logo Terê Verde Online" class="logo">
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Início</a></li>
-                    <li><a href="trilhas.html">Trilhas</a></li>
-                    <li><a href="cachoeiras.html">Cachoeiras</a></li>
-                    <li><a href="eventos.html">Eventos</a></li>
-                    <li><a href="admin-login.html">Área Restrita</a></li>
-                </ul>
-            </nav>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="logo-area">
+        <div class="logo-icon"><i class="fa-solid fa-mountain-sun"></i></div>
+        <div class="logo-text">
+          <h1>Terê Verde</h1>
+          <span>Online • Teresópolis</span>
         </div>
-    </header>
+      </a>
 
-    <main>
-        <section class="titulo-pagina">
-            <div class="conteudo">
-                <h1>Descubra o Ecoturismo em Teresópolis</h1>
-                <p>O seu guia definitivo para trilhas, cachoeiras e eventos na Região Serrana.</p>
-            </div>
-        </section>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="ativo"><i class="fa-solid fa-house"></i> Início</a></li>
+        <li><a href="trilhas.html"><i class="fa-solid fa-person-hiking"></i> Trilhas</a></li>
+        <li><a href="cachoeiras.html"><i class="fa-solid fa-water"></i> Cachoeiras</a></li>
+        <li><a href="eventos.html"><i class="fa-solid fa-calendar-days"></i> Eventos</a></li>
+      </ul>
 
-        <section class="conteudo">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h2 style="color: #2d5a27; margin-bottom: 8px;">Explore por Categoria</h2>
-                <p style="color: #666;">Conheça as principais atrações naturais da nossa cidade.</p>
-            </div>
-
-            <div class="grade-cards">
-                <div class="card">
-                    <img src="img/tres-picos.jpg" alt="Trilhas">
-                    <div class="card-corpo">
-                        <span class="badge">Aventura</span>
-                        <h3>Trilhas Ecológicas</h3>
-                        <p>Rotas completas com níveis de dificuldade, distâncias e tempo estimado.</p>
-                        <a href="trilhas.html" style="color: #2d5a27; font-weight: bold; text-decoration: none;">Ver trilhas →</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="img/teresopolis-4.webp" alt="Cachoeiras">
-                    <div class="card-corpo">
-                        <span class="badge">Lazer</span>
-                        <h3>Cachoeiras Naturais</h3>
-                        <p>Piscinas naturais e quedas d'água próprias para banho na serra.</p>
-                        <a href="cachoeiras.html" style="color: #2d5a27; font-weight: bold; text-decoration: none;">Ver cachoeiras →</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="img/tres-picos2.jpg" alt="Eventos">
-                    <div class="card-corpo">
-                        <span class="badge">Comunidade</span>
-                        <h3>Eventos e Mutirões</h3>
-                        <p>Participe de caminhadas ecológicas, palestras e mutirões de preservação.</p>
-                        <a href="eventos.html" style="color: #2d5a27; font-weight: bold; text-decoration: none;">Ver agenda →</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="conteudo">
-            <p>© 2026 Terê Verde Online. Todos os direitos reservados.</p>
-            <p>Teresópolis - RJ</p>
+      <div class="header-actions">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="inputBusca" placeholder="Buscar atrativos...">
         </div>
-    </footer>
+        <a href="admin-login.html" class="btn-admin"><i class="fa-solid fa-lock"></i> Área Restrita</a>
+      </div>
+
+      <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="menuIcon"></i></button>
+    </div>
+
+    <div class="mobile-menu-drawer" id="mobileMenu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="trilhas.html">Trilhas</a></li>
+        <li><a href="cachoeiras.html">Cachoeiras</a></li>
+        <li><a href="eventos.html">Eventos</a></li>
+        <li><a href="admin-login.html" style="color: var(--nature-light);">Área Restrita (Admin)</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- BANNER HERO -->
+  <section class="hero-slider" id="heroSlider">
+    <div class="hero-slide ativo">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80" alt="PARNASO">
+      <div class="hero-content">
+        <span class="hero-badge"><i class="fa-solid fa-location-dot"></i> PARNASO • Teresópolis / RJ</span>
+        <h2>Descubra as Belezas Naturais da Região Serrana</h2>
+        <p>Explore trilhas icônicas, mirantes espetaculares e a biodiversidade preservada da Mata Atlântica em um só lugar.</p>
+        <a href="trilhas.html" class="hero-btn">Explorar Trilhas <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1600&q=80" alt="Cachoeiras">
+      <div class="hero-content">
+        <span class="hero-badge"><i class="fa-solid fa-water"></i> Águas Cristalinas</span>
+        <h2>Cachoeiras e Poços com Balneabilidade Verificada</h2>
+        <p>Consulte condições de acesso, nível de dificuldade e sinalização oficial antes de iniciar seu passeio.</p>
+        <a href="cachoeiras.html" class="hero-btn">Ver Cachoeiras <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <button class="slider-arrow prev" onclick="moverSlider(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="slider-arrow next" onclick="moverSlider(1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+    <div class="slider-dots">
+      <button class="slider-dot ativo" onclick="irSlide(0)"></button>
+      <button class="slider-dot" onclick="irSlide(1)"></button>
+    </div>
+  </section>
+
+  <!-- CONTEÚDO -->
+  <main class="main-container">
+    <section>
+      <div class="section-header">
+        <span class="section-tag">Navegue pelas Experiências</span>
+        <h2 class="section-title">Explore Teresópolis</h2>
+        <p class="section-desc">Conectamos você às riquezas naturais das principais unidades de conservação da nossa região.</p>
+      </div>
+
+      <div class="categorias-grid">
+        <div class="categoria-card">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1551632811-562e32d1e75d?auto=format&fit=crop&w=800&q=80" alt="Trilhas">
+            <span class="card-badge-top">Percursos</span>
+          </div>
+          <div class="card-body">
+            <h3>Trilhas e Mirantes</h3>
+            <p>De caminhadas leves a travessias de montanha desafiadoras com dados altimétricos.</p>
+            <a href="trilhas.html" class="card-link">Ver Trilhas <i class="fa-solid fa-arrow-right-long"></i></a>
+          </div>
+        </div>
+
+        <div class="categoria-card">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80" alt="Cachoeiras">
+            <span class="card-badge-top">Banhos</span>
+          </div>
+          <div class="card-body">
+            <h3>Cachoeiras Naturais</h3>
+            <p>Quedas d'água cristalinas com orientações de balneabilidade e acesso seguro.</p>
+            <a href="cachoeiras.html" class="card-link">Ver Cachoeiras <i class="fa-solid fa-arrow-right-long"></i></a>
+          </div>
+        </div>
+
+        <div class="categoria-card">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=800&q=80" alt="Eventos">
+            <span class="card-badge-top">Agenda</span>
+          </div>
+          <div class="card-body">
+            <h3>Eventos Ecológicos</h3>
+            <p>Mutirões, palestras de educação ambiental e caminhadas guiadas nos parques.</p>
+            <a href="eventos.html" class="card-link">Ver Eventos <i class="fa-solid fa-arrow-right-long"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATUALIZAÇÕES DA API -->
+    <section>
+      <div class="section-header">
+        <span class="section-tag">Em Tempo Real</span>
+        <h2 class="section-title">Últimas Atualizações da Base</h2>
+        <p class="section-desc">Cadastros sincronizados diretamente com o banco de dados MongoDB Atlas.</p>
+      </div>
+
+      <div id="updatesGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px;">
+        <p style="grid-column: 1/-1; text-align: center; color: var(--gray-text); padding: 30px;">Carregando registros do servidor...</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3>Terê Verde Online</h3>
+        <p>Portal oficial de centralização e gestão ecoturística para os parques naturais de Teresópolis.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Navegação</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="trilhas.html">Trilhas</a></li>
+          <li><a href="cachoeiras.html">Cachoeiras</a></li>
+          <li><a href="eventos.html">Eventos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Gestão</h3>
+        <ul class="footer-links">
+          <li><a href="admin-login.html">Painel Administrativo</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Contato</h3>
+        <p>Teresópolis • RJ</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Terê Verde Online • MVP Acadêmico</p>
+      <p>Django • MongoDB Atlas</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const icon = document.getElementById('menuIcon');
+      menu.classList.toggle('ativo');
+      icon.className = menu.classList.contains('ativo') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+
+    let indiceAtual = 0;
+    const listaSlides = document.querySelectorAll('.hero-slide');
+    let intervaloSlider = setInterval(() => moverSlider(1), 6000);
+
+    function atualizarSlider() {
+      listaSlides.forEach((s, i) => s.classList.toggle('ativo', i === indiceAtual));
+    }
+
+    function moverSlider(passo) {
+      indiceAtual = (indiceAtual + passo + listaSlides.length) % listaSlides.length;
+      atualizarSlider();
+    }
+
+    function irSlide(index) {
+      indiceAtual = index;
+      atualizarSlider();
+    }
+
+    async function carregarAtualizacoesAPI() {
+      const grid = document.getElementById('updatesGrid');
+      if (!grid) return;
+      try {
+        const [resT, resC, resE] = await Promise.all([
+          fetch('http://127.0.0.1:8000/api/trilhas/').then(r => r.ok ? r.json() : []),
+          fetch('http://127.0.0.1:8000/api/cachoeiras/').then(r => r.ok ? r.json() : []),
+          fetch('http://127.0.0.1:8000/api/eventos/').then(r => r.ok ? r.json() : [])
+        ]);
+
+        const itens = [
+          ...resT.slice(-2).map(t => ({ tipo: 'Trilha', titulo: t.nome, sub: `${t.parque} • ${t.dificuldade || ''}`, desc: t.descricao || '', img: t.imagem_url, link: 'trilhas.html' })),
+          ...resC.slice(-2).map(c => ({ tipo: 'Cachoeira', titulo: c.nome, sub: `${c.parque}`, desc: c.descricao || '', img: c.imagem_url, link: 'cachoeiras.html' })),
+          ...resE.slice(-2).map(e => ({ tipo: 'Evento', titulo: e.titulo, sub: `${e.parque}`, desc: e.descricao || '', img: e.imagem_url, link: 'eventos.html' }))
+        ];
+
+        if (!itens.length) {
+          grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color: var(--gray-text); padding: 30px;">Nenhum registro encontrado na base no momento.</p>';
+          return;
+        }
+
+        grid.innerHTML = itens.map(item => `
+          <div style="background: white; border-radius: 18px; padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid #e1ece5; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              ${item.img ? `<img src="${item.img}" alt="${item.titulo}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 16px;">` : ''}
+              <span style="display: inline-block; background: var(--suave); color: var(--nature); font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 99px; margin-bottom: 10px;">${item.tipo}</span>
+              <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; color: var(--forest-dark); margin-bottom: 6px;">${item.titulo}</h3>
+              <div style="font-size: 13px; font-weight: 600; color: var(--nature); margin-bottom: 8px;">${item.sub}</div>
+              <p style="font-size: 14px; color: var(--gray-text); margin-bottom: 18px; line-height: 1.5;">${item.desc}</p>
+            </div>
+            <a href="${item.link}" style="display: inline-block; background: var(--forest); color: white; text-decoration: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 13px; text-align: center;">Ver Detalhes</a>
+          </div>
+        `).join('');
+      } catch (err) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color: var(--nature); padding: 20px;">💡 Servidor Django offline. Inicie com <b>python manage.py runserver</b> para carregar os dados.</p>';
+      }
+    }
+
+    carregarAtualizacoesAPI();
+  </script>
 </body>
 </html>

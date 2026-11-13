@@ -1,340 +1,207 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo - Eventos</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f4f6f4;
-            color: #333333;
-        }
-
-        /* BARRA SUPERIOR DE NAVEGAÇÃO */
-        .nav-admin {
-            display: flex;
-            align-items: center;
-            background-color: #244b20;
-            padding: 14px 24px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        /* Força a cor branca e remove conflitos com outros ficheiros CSS */
-        .nav-admin a {
-            text-decoration: none !important;
-            color: #ffffff !important;
-            font-size: 0.95rem;
-            font-weight: bold;
-            padding: 8px 14px;
-            border-radius: 6px;
-            transition: background-color 0.2s ease;
-            display: inline-block;
-        }
-
-        .nav-admin a:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .nav-admin a.active {
-            background-color: #142e12 !important;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-logout {
-            margin-left: auto;
-            background-color: #c0392b;
-            color: #ffffff !important;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: background-color 0.2s ease;
-        }
-
-        .btn-logout:hover {
-            background-color: #a93226;
-        }
-
-        /* ÁREA DE CONTEÚDO */
-        .container {
-            max-width: 950px;
-            margin: 35px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        h2 {
-            color: #244b20;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #e1e8e1;
-            padding-bottom: 10px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full {
-            grid-column: span 2;
-        }
-
-        label {
-            font-weight: bold;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-            color: #244b20;
-        }
-
-        input, select, textarea {
-            padding: 10px;
-            border: 1px solid #ccd6cc;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: #244b20;
-        }
-
-        .btn-salvar {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
-
-        .btn-salvar:hover {
-            background-color: #219653;
-        }
-
-        /* TABELA DE REGISTOS */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #e2e8e2;
-            padding: 12px;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        th {
-            background-color: #244b20;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9fbf9;
-        }
-
-        .btn-del {
-            background-color: #c0392b;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .btn-del:hover {
-            background-color: #a93226;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Eventos — Terê Verde Online</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f5; color: #1b2e1e; margin: 0; }
+    header { background: #ffffff; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    header nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+    header nav a { text-decoration: none; color: #244b20; font-weight: 600; }
+    header nav a.ativo { border-bottom: 2px solid #244b20; padding-bottom: 4px; }
+    .container { max-width: 920px; margin: 32px auto; padding: 0 20px; }
+    h1, h2 { color: #244b20; }
+    .card-form { background: #fff; padding: 28px; border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); margin-bottom: 32px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 16px; }
+    .btn-salvar { background: #244b20; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .btn-salvar:hover { background: #1a3817; }
+    .btn-cancelar { background: #718096; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; display: none; margin-left: 10px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+    .item-card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; }
+    .item-card img { width: 100%; height: 165px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+    .acoes-card { display: flex; gap: 8px; margin-top: 12px; }
+    .btn-editar { background: #2980b9; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; flex: 1; text-align: center; }
+    .btn-excluir { background: #c0392b; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; flex: 1; text-align: center; }
+  </style>
 </head>
 <body>
-    <div class="nav-admin">
-        <div class="nav-links">
-            <a href="admin-eventos.html" class="active">Gerenciar Eventos</a>
-            <a href="admin-trilhas.html">Gerenciar Trilhas</a>
-            <a href="admin-cachoeiras.html">Gerenciar Cachoeiras</a>
+  <header>
+    <a href="index.html" style="font-weight:800; font-size:1.25rem; color:#244b20; text-decoration:none;">🌿 TERÊ VERDE ONLINE</a>
+    <nav>
+      <ul>
+        <li><a href="admin-trilhas.html">Trilhas</a></li>
+        <li><a href="admin-cachoeiras.html">Cachoeiras</a></li>
+        <li><a href="admin-eventos.html" class="ativo">Eventos</a></li>
+        <li><a href="index.html">Ver Site</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 id="tituloForm">Gerenciar Eventos</h1>
+
+    <form id="formEvento" class="card-form" enctype="multipart/form-data">
+      <input type="hidden" id="eventoId" name="eventoId">
+
+      <div class="form-group">
+        <label>Título do Evento</label>
+        <input type="text" id="titulo" name="titulo" required placeholder="Ex: Mutirão de Limpeza PARNASO">
+      </div>
+
+      <div class="form-group">
+        <label>Parque</label>
+        <select id="parque" name="parque" required>
+          <option value="PARNASO">PARNASO</option>
+          <option value="PETP">Parque Estadual dos Três Picos (PETP)</option>
+          <option value="PNMMT">Parque Natural Municipal Montanhas de Teresópolis</option>
+        </select>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group" style="margin:0">
+          <label>Data do Evento</label>
+          <input type="date" id="data_evento" name="data_evento" required>
         </div>
-        <button class="btn-logout" onclick="fazerLogout()">Sair</button>
-    </div>
+        <div class="form-group" style="margin:0">
+          <label>Horário</label>
+          <input type="text" id="horario" name="horario" placeholder="Ex: 08:30">
+        </div>
+      </div>
 
-    <div class="container">
-        <h2>Painel de Gestão de Eventos</h2>
+      <div class="form-group">
+        <label>Ponto de Encontro / Local</label>
+        <input type="text" id="local" name="local" placeholder="Ex: Portaria Sede Teresópolis">
+      </div>
 
-        <form id="form-evento" onsubmit="salvarEvento(event)">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Título do Evento *</label>
-                    <input type="text" id="titulo" required placeholder="Ex: Mutirão de Plantio">
-                </div>
-                <div class="form-group">
-                    <label>Data *</label>
-                    <input type="date" id="data_evento" required>
-                </div>
-                <div class="form-group">
-                    <label>Horário</label>
-                    <input type="text" id="horario" placeholder="Ex: 09:00">
-                </div>
-                <div class="form-group">
-                    <label>Local</label>
-                    <input type="text" id="local" placeholder="Ex: Sede do PARNASO">
-                </div>
-                <div class="form-group full">
-                    <label>Parque Relacionado</label>
-                    <select id="parque_relacionado">
-                        <option value="PARNASO">PARNASO</option>
-                        <option value="PETP">PETP</option>
-                        <option value="PNMMT">PNMMT</option>
-                    </select>
-                </div>
-                <div class="form-group full">
-                    <label>Descrição</label>
-                    <textarea id="descricao" rows="3" placeholder="Detalhes sobre a atividade..."></textarea>
-                </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="descricao" name="descricao" rows="3" placeholder="Detalhes da atividade..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Banner / Foto do Evento (JPG, PNG, WEBP)</label>
+        <input type="file" name="imagem" accept="image/*" onchange="mostrarPreview(event, 'prevEvento')">
+        <!-- Prévia da imagem exibida logo abaixo do input -->
+        <img id="prevEvento" src="" alt="Prévia" style="display:none; margin-top:10px; max-height:160px; border-radius:8px; border: 1px solid #cbd5e1;">
+      </div>
+
+      <div style="display: flex; align-items: center;">
+        <button type="submit" id="btnSalvar" class="btn-salvar">Salvar Evento</button>
+        <button type="button" id="btnCancelar" class="btn-cancelar" onclick="limparFormulario()">Cancelar</button>
+      </div>
+    </form>
+
+    <h2>Eventos Cadastrados</h2>
+    <div id="listaEventos" class="cards-grid"></div>
+  </main>
+
+  <script>
+    const API_URL = 'http://127.0.0.1:8000/api/eventos/';
+    const token = localStorage.getItem('admin_token') || localStorage.getItem('token') || 'token_tere_verde_admin_2026';
+    let eventosCache = [];
+
+    function mostrarPreview(event, imgId) {
+      const arquivo = event.target.files[0];
+      const preview = document.getElementById(imgId);
+      if (arquivo) {
+        preview.src = URL.createObjectURL(arquivo);
+        preview.style.display = 'block';
+      }
+    }
+
+    async function carregarEventos() {
+      const container = document.getElementById('listaEventos');
+      try {
+        const resp = await fetch(API_URL);
+        const dados = await resp.json();
+        eventosCache = dados;
+        if (!dados.length) {
+          container.innerHTML = '<p>Nenhum evento cadastrado ainda.</p>';
+          return;
+        }
+        container.innerHTML = dados.map(ev => `
+          <div class="item-card">
+            <div>
+              ${ev.imagem_url ? `<img src="${ev.imagem_url}" alt="${ev.titulo}">` : ''}
+              <h3 style="margin:0 0 6px 0;">${ev.titulo}</h3>
+              <p style="margin:0 0 8px 0; font-size:0.9rem; color:#4b5563;"><strong>${ev.parque}</strong> • ${ev.data_evento || ''}</p>
+              <p style="font-size:0.9rem;">${ev.descricao || ''}</p>
             </div>
-            <button type="submit" class="btn-salvar">Salvar Evento</button>
-        </form>
+            <div class="acoes-card">
+              <button class="btn-editar" onclick="prepararEdicao('${ev.id}')">Editar</button>
+              <button class="btn-excluir" onclick="excluirEvento('${ev.id}')">Excluir</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = '<p style="color:#c0392b;">⚠️ Servidor Django offline. Rode <b>python manage.py runserver</b> no terminal.</p>';
+      }
+    }
 
-        <h3 style="margin-top: 45px; margin-bottom: 10px; color: #244b20;">Eventos Registados</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Data</th>
-                    <th>Horário</th>
-                    <th>Local</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-eventos">
-                <tr><td colspan="5">A carregar eventos...</td></tr>
-            </tbody>
-        </table>
-    </div>
+    function prepararEdicao(id) {
+      const ev = eventosCache.find(item => item.id === id);
+      if (!ev) return;
+      document.getElementById('eventoId').value = ev.id;
+      document.getElementById('titulo').value = ev.titulo || '';
+      document.getElementById('parque').value = ev.parque || 'PARNASO';
+      document.getElementById('data_evento').value = ev.data_evento || '';
+      document.getElementById('horario').value = ev.horario || '';
+      document.getElementById('local').value = ev.local || '';
+      document.getElementById('descricao').value = ev.descricao || '';
+      
+      document.getElementById('tituloForm').innerText = 'Editar Evento';
+      document.getElementById('btnSalvar').innerText = 'Atualizar Evento';
+      document.getElementById('btnCancelar').style.display = 'inline-block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-    <script>
-        const API_URL = 'http://127.0.0.1:8000/api/eventos/';
-        const token = localStorage.getItem('token');
+    function limparFormulario() {
+      document.getElementById('formEvento').reset();
+      document.getElementById('eventoId').value = '';
+      document.getElementById('prevEvento').style.display = 'none';
+      document.getElementById('tituloForm').innerText = 'Gerenciar Eventos';
+      document.getElementById('btnSalvar').innerText = 'Salvar Evento';
+      document.getElementById('btnCancelar').style.display = 'none';
+    }
 
-        if (!token) {
-            window.location.href = 'admin-login.html';
-        }
+    document.getElementById('formEvento').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('eventoId').value;
+      const formData = new FormData(this);
+      
+      const url = id ? `${API_URL}${id}/` : API_URL;
+      const metodo = id ? 'PUT' : 'POST';
 
-        async function carregarEventos() {
-            try {
-                const res = await fetch(API_URL);
-                const dados = await res.json();
-                const tbody = document.getElementById('tabela-eventos');
-                tbody.innerHTML = '';
+      const resp = await fetch(url, {
+        method: metodo,
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
 
-                if (!Array.isArray(dados) || dados.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5">Nenhum evento registado até ao momento.</td></tr>';
-                    return;
-                }
-
-                dados.forEach(ev => {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td><strong>${ev.titulo}</strong></td>
-                            <td>${ev.data_evento}</td>
-                            <td>${ev.horario || '-'}</td>
-                            <td>${ev.local || '-'}</td>
-                            <td>
-                                <button class="btn-del" onclick="excluirEvento('${ev.id}')">Excluir</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            } catch (err) {
-                document.getElementById('tabela-eventos').innerHTML = '<tr><td colspan="5" style="color:red;">Não foi possível carregar os dados da API.</td></tr>';
-            }
-        }
-
-        async function salvarEvento(e) {
-            e.preventDefault();
-            const payload = {
-                titulo: document.getElementById('titulo').value,
-                data_evento: document.getElementById('data_evento').value,
-                horario: document.getElementById('horario').value,
-                local: document.getElementById('local').value,
-                parque_relacionado: document.getElementById('parque_relacionado').value,
-                descricao: document.getElementById('descricao').value
-            };
-
-            try {
-                const res = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (res.ok) {
-                    alert('Evento registado com sucesso!');
-                    document.getElementById('form-evento').reset();
-                    carregarEventos();
-                } else {
-                    const erro = await res.json();
-                    alert('Erro ao guardar: ' + (erro.erro || 'Falha no servidor.'));
-                }
-            } catch (err) {
-                alert('Erro de comunicação com o servidor.');
-            }
-        }
-
-        async function excluirEvento(id) {
-            if (!confirm('Deseja realmente eliminar este evento?')) return;
-            try {
-                const res = await fetch(`${API_URL}${id}/`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (res.ok) {
-                    carregarEventos();
-                } else {
-                    alert('Erro ao eliminar evento.');
-                }
-            } catch (err) {
-                alert('Erro de comunicação com o servidor.');
-            }
-        }
-
-        function fazerLogout() {
-            localStorage.clear();
-            window.location.href = 'admin-login.html';
-        }
-
+      if (resp.ok) {
+        limparFormulario();
         carregarEventos();
-    </script>
+      } else {
+        const erro = await resp.json();
+        console.error(erro);
+      }
+    });
+
+    async function excluirEvento(id) {
+      if (!confirm('Deseja realmente excluir este evento?')) return;
+      await fetch(`${API_URL}${id}/`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      carregarEventos();
+    }
+
+    carregarEventos();
+  </script>
 </body>
 </html>

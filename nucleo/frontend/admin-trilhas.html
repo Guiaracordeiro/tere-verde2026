@@ -1,205 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração de Trilhas - Terê Verde Online</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background-color: #f4f6f4; color: #333333; }
-
-        .nav-admin {
-            display: flex;
-            align-items: center;
-            background-color: #244b20;
-            padding: 14px 24px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
-        .nav-links { display: flex; gap: 15px; align-items: center; }
-        .nav-admin a {
-            text-decoration: none !important;
-            color: #ffffff !important;
-            font-size: 0.95rem;
-            font-weight: bold;
-            padding: 8px 14px;
-            border-radius: 6px;
-            display: inline-block;
-        }
-        .nav-admin a:hover { background-color: rgba(255, 255, 255, 0.15); }
-        .nav-admin a.active {
-            background-color: #142e12 !important;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
-        }
-        .btn-logout {
-            margin-left: auto;
-            background-color: #c0392b;
-            color: #ffffff !important;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        .btn-logout:hover { background-color: #a93226; }
-
-        .container {
-            max-width: 950px;
-            margin: 35px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-        h2 { color: #244b20; margin-bottom: 25px; border-bottom: 2px solid #e1e8e1; padding-bottom: 10px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group.full { grid-column: span 2; }
-        label { font-weight: bold; margin-bottom: 6px; font-size: 0.9rem; color: #244b20; }
-        input, select, textarea { padding: 10px; border: 1px solid #ccd6cc; border-radius: 6px; font-size: 0.95rem; outline: none; }
-        input:focus, select:focus, textarea:focus { border-color: #244b20; }
-        .btn-salvar {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-        .btn-salvar:hover { background-color: #219653; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #e2e8e2; padding: 12px; text-align: left; font-size: 0.9rem; }
-        th { background-color: #244b20; color: white; }
-        tr:nth-child(even) { background-color: #f9fbf9; }
-        .btn-del { background-color: #c0392b; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Trilhas — Terê Verde Online</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f5; color: #1b2e1e; margin: 0; }
+    header { background: #ffffff; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    header nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+    header nav a { text-decoration: none; color: #244b20; font-weight: 600; }
+    header nav a.ativo { border-bottom: 2px solid #244b20; padding-bottom: 4px; }
+    .container { max-width: 920px; margin: 32px auto; padding: 0 20px; }
+    h1, h2 { color: #244b20; }
+    .card-form { background: #fff; padding: 28px; border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); margin-bottom: 32px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 16px; }
+    .btn-salvar { background: #244b20; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .btn-salvar:hover { background: #1a3817; }
+    .btn-cancelar { background: #718096; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; display: none; margin-left: 10px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+    .item-card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; }
+    .item-card img { width: 100%; height: 165px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+    .acoes-card { display: flex; gap: 8px; margin-top: 12px; }
+    .btn-editar { background: #2980b9; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; flex: 1; text-align: center; }
+    .btn-excluir { background: #c0392b; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; flex: 1; text-align: center; }
+  </style>
 </head>
 <body>
-    <div class="nav-admin">
-        <div class="nav-links">
-            <a href="admin-eventos.html">Gerenciar Eventos</a>
-            <a href="admin-trilhas.html" class="active">Gerenciar Trilhas</a>
-            <a href="admin-cachoeiras.html">Gerenciar Cachoeiras</a>
+  <header>
+    <a href="index.html" style="font-weight:800; font-size:1.25rem; color:#244b20; text-decoration:none;">🌿 TERÊ VERDE ONLINE</a>
+    <nav>
+      <ul>
+        <li><a href="admin-trilhas.html" class="ativo">Trilhas</a></li>
+        <li><a href="admin-cachoeiras.html">Cachoeiras</a></li>
+        <li><a href="admin-eventos.html">Eventos</a></li>
+        <li><a href="index.html">Ver Site</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 id="tituloForm">Gerenciar Trilhas</h1>
+
+    <form id="formTrilha" class="card-form" enctype="multipart/form-data">
+      <input type="hidden" id="trilhaId" name="trilhaId">
+
+      <div class="form-group">
+        <label>Nome da Trilha</label>
+        <input type="text" id="nome" name="nome" required placeholder="Ex: Pedra do Sino">
+      </div>
+
+      <div class="grid-3">
+        <div class="form-group" style="margin:0">
+          <label>Parque</label>
+          <select id="parque" name="parque" required>
+            <option value="PARNASO">PARNASO</option>
+            <option value="PETP">Parque Estadual dos Três Picos (PETP)</option>
+            <option value="PNMMT">Parque Natural Municipal Montanhas de Teresópolis</option>
+          </select>
         </div>
-        <button class="btn-logout" onclick="fazerLogout()">Sair</button>
-    </div>
+        <div class="form-group" style="margin:0">
+          <label>Dificuldade</label>
+          <select id="dificuldade" name="dificuldade" required>
+            <option value="Fácil">Fácil</option>
+            <option value="Moderada">Moderada</option>
+            <option value="Difícil">Difícil</option>
+            <option value="Pesada">Pesada</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>Distância</label>
+          <input type="text" id="distancia" name="distancia" placeholder="Ex: 11 km">
+        </div>
+      </div>
 
-    <div class="container">
-        <h2>Gestão de Trilhas (CRUD)</h2>
+      <div class="grid-3">
+        <div class="form-group" style="margin:0">
+          <label>Tempo Estimado</label>
+          <input type="text" id="tempo" name="tempo" placeholder="Ex: 5h">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>Altitude Máxima</label>
+          <input type="text" id="altitude" name="altitude" placeholder="Ex: 2.275m">
+        </div>
+      </div>
 
-        <form id="form-trilha" onsubmit="salvarTrilha(event)">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Nome da Trilha *</label>
-                    <input type="text" id="nome" required placeholder="Ex: Trilha da Pedra do Sino">
-                </div>
-                <div class="form-group">
-                    <label>Parque Vinculado *</label>
-                    <select id="parque">
-                        <option value="PARNASO">PARNASO</option>
-                        <option value="PETP">PETP</option>
-                        <option value="PNMMT">PNMMT</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Dificuldade *</label>
-                    <select id="dificuldade">
-                        <option value="Fácil">Fácil</option>
-                        <option value="Moderada">Moderada</option>
-                        <option value="Difícil">Difícil</option>
-                        <option value="Muito Difícil">Muito Difícil</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Extensão (km) *</label>
-                    <input type="number" step="0.1" id="extensao_km" required placeholder="Ex: 5.5">
-                </div>
-                <div class="form-group">
-                    <label>Tempo Estimado *</label>
-                    <input type="text" id="tempo_estimado" required placeholder="Ex: 2h 30min">
-                </div>
-                <div class="form-group">
-                    <label>Altitude Máxima (metros)</label>
-                    <input type="number" id="altitude_maxima" placeholder="Ex: 2275">
-                </div>
-                <div class="form-group full">
-                    <label>Descrição</label>
-                    <textarea id="descricao" rows="3" placeholder="Informações do trajeto..."></textarea>
-                </div>
-            </div>
-            <button type="submit" class="btn-salvar">Salvar Trilha</button>
-        </form>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="descricao" name="descricao" rows="3" placeholder="Detalhes do percurso..."></textarea>
+      </div>
 
-        <h3 style="margin-top: 45px; margin-bottom: 10px; color: #244b20;">Trilhas Cadastradas</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Parque</th>
-                    <th>Dificuldade</th>
-                    <th>Extensão</th>
-                    <th>Tempo</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-trilhas">
-                <tr><td colspan="6">A carregar trilhas...</td></tr>
-            </tbody>
-        </table>
-    </div>
+      <div class="form-group">
+        <label>Foto da Trilha (JPG, PNG, WEBP)</label>
+        <input type="file" name="imagem" accept="image/*" onchange="mostrarPreview(event, 'prevTrilha')">
+        <img id="prevTrilha" src="" alt="Prévia" style="display:none; margin-top:10px; max-height:160px; border-radius:8px;">
+      </div>
 
-    <script>
-        const API_URL = 'http://127.0.0.1:8000/api/trilhas/';
-        const token = localStorage.getItem('token');
-        if (!token) window.location.href = 'admin-login.html';
+      <div style="display: flex; align-items: center;">
+        <button type="submit" id="btnSalvar" class="btn-salvar">Salvar Trilha</button>
+        <button type="button" id="btnCancelar" class="btn-cancelar" onclick="limparFormulario()">Cancelar</button>
+      </div>
+    </form>
 
-        async function carregarTrilhas() {
-            try {
-                const res = await fetch(API_URL);
-                const dados = await res.json();
-                const tbody = document.getElementById('tabela-trilhas');
-                tbody.innerHTML = '';
+    <h2>Trilhas Cadastradas</h2>
+    <div id="listaTrilhas" class="cards-grid"></div>
+  </main>
 
-                if (!Array.isArray(dados) || dados.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6">Nenhuma trilha cadastrada ainda.</td></tr>';
-                    return;
-                }
+  <script>
+    const API_URL = 'http://127.0.0.1:8000/api/trilhas/';
+    const token = localStorage.getItem('admin_token') || localStorage.getItem('token') || 'token_tere_verde_admin_2026';
+    let trilhasCache = [];
 
-                dados.forEach(t => {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td><strong>${t.nome}</strong></td>
-                            <td>${t.parque}</td>
-                            <td>${t.dificuldade}</td>
-                            <td>${t.extensao_km} km</td>
-                            <td>${t.tempo_estimado}</td>
-                            <td>
-                                <button class="btn-del" onclick="excluirTrilha('${t.id}')">Excluir</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            } catch (err) {
-                document.getElementById('tabela-trilhas').innerHTML = '<tr><td colspan="6" style="color:red;">Não foi possível carregar as trilhas da API.</td></tr>';
-            }
+    function mostrarPreview(event, imgId) {
+      const arquivo = event.target.files[0];
+      const preview = document.getElementById(imgId);
+      if (arquivo) {
+        preview.src = URL.createObjectURL(arquivo);
+        preview.style.display = 'block';
+      }
+    }
+
+    async function carregarTrilhas() {
+      const container = document.getElementById('listaTrilhas');
+      try {
+        const resp = await fetch(API_URL);
+        const dados = await resp.json();
+        trilhasCache = dados;
+        if (!dados.length) {
+          container.innerHTML = '<p>Nenhuma trilha cadastrada ainda.</p>';
+          return;
         }
+        container.innerHTML = dados.map(t => `
+          <div class="item-card">
+            <div>
+              ${t.imagem_url ? `<img src="${t.imagem_url}" alt="${t.nome}">` : ''}
+              <h3 style="margin:0 0 6px 0;">${t.nome}</h3>
+              <p style="margin:0 0 8px 0; font-size:0.9rem; color:#4b5563;"><strong>${t.parque}</strong> • ${t.dificuldade}</p>
+              <p style="font-size:0.9rem;">${t.descricao || ''}</p>
+            </div>
+            <div class="acoes-card">
+              <button class="btn-editar" onclick="prepararEdicao('${t.id}')">Editar</button>
+              <button class="btn-excluir" onclick="excluirTrilha('${t.id}')">Excluir</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = '<p style="color:#c0392b;">⚠️ Servidor Django offline. Rode <b>python manage.py runserver</b> no terminal.</p>';
+      }
+    }
 
-        async function salvarTrilha(e) {
-            e.preventDefault();
-            const payload = {
-                nome: document.getElementById('nome').value,
-                parque: document.getElementById('parque').value,
-                dificuldade: document.getElementById('dificuldade').value,
-                extensao_km: parseFloat(document.getElementById('extensao_km').value),
-                tempo_estimado: document.getElementById('tempo_estimado').value,
-                altitude_maxima: document.getElementById('altitude_maxima').value ? parseInt(document.getElementById('altitude_maxima').value) : null,
-                descricao: document.getElementById('descricao').value
-            };
+    function prepararEdicao(id) {
+      const t = trilhasCache.find(item => item.id === id);
+      if (!t) return;
+      document.getElementById('trilhaId').value = t.id;
+      document.getElementById('nome').value = t.nome || '';
+      document.getElementById('parque').value = t.parque || 'PARNASO';
+      document.getElementById('dificuldade').value = t.dificuldade || 'Fácil';
+      document.getElementById('distancia').value = t.distancia || '';
+      document.getElementById('tempo').value = t.tempo || '';
+      document.getElementById('altitude').value = t.altitude || '';
+      document.getElementById('descricao').value = t.descricao || '';
+      
+      document.getElementById('tituloForm').innerText = 'Editar Trilha';
+      document.getElementById('btnSalvar').innerText = 'Atualizar Trilha';
+      document.getElementById('btnCancelar').style.display = 'inline-block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-            try {
-                const res = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type':
+    function limparFormulario() {
+      document.getElementById('formTrilha').reset();
+      document.getElementById('trilhaId').value = '';
+      document.getElementById('prevTrilha').style.display = 'none';
+      document.getElementById('tituloForm').innerText = 'Gerenciar Trilhas';
+      document.getElementById('btnSalvar').innerText = 'Salvar Trilha';
+      document.getElementById('btnCancelar').style.display = 'none';
+    }
+
+    document.getElementById('formTrilha').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('trilhaId').value;
+      const formData = new FormData(this);
+      
+      const url = id ? `${API_URL}${id}/` : API_URL;
+      const metodo = id ? 'PUT' : 'POST';
+
+      const resp = await fetch(url, {
+        method: metodo,
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
+
+      if (resp.ok) {
+        limparFormulario();
+        carregarTrilhas();
+      } else {
+        const erro = await resp.json();
+        console.error(erro);
+      }
+    });
+
+    async function excluirTrilha(id) {
+      if (!confirm('Deseja realmente excluir esta trilha?')) return;
+      await fetch(`${API_URL}${id}/`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      carregarTrilhas();
+    }
+
+    carregarTrilhas();
+  </script>
+</body>
+</html>
